@@ -1,0 +1,103 @@
+body{
+background-color: rgb(214, 211, 212) ;
+vertical-align: middle;
+width: 90%;
+height: 100%;
+}
+form{
+    width: 80%;
+    text-align:center;
+    background-color:rgb(209, 202, 209);
+    border-style: ridge;
+    border-color: rgb(134, 128, 134);
+}
+form + .pseudo .message .datetime {
+  margin: 2px;
+  vertical-align: middle;
+  background-color: rgb(225, 243, 249);
+}
+article {
+  background-color:rgb(209, 202, 209);
+  border-style: ridge;
+  border-color: rgb(134, 128, 134);
+  margin: 20px;
+}
+
+aside{
+
+}
+
+#footercontent{
+    text-align:center;
+    background-color:rgb(209, 202, 209);
+    border-style: ridge;
+    border-color: rgb(134, 128, 134);
+}
+
+.pseudo {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+q {font-size: 0.9em;
+    font-weight: slight;
+    
+}
+.dh {
+float: right;
+  font-size: 0.7em;
+}
+.ul {
+  display: flex;
+  margin: auto;
+  width: inherit;
+}
+li{
+  flex-direction: column;
+border-style: outset;
+height: auto;
+width: 60%;
+padding-bottom: 12px;
+padding-right: 5px;
+}
+#error
+{
+	border-style: outset;
+	border-color : red;
+	margin :auto;
+	width : 40%;
+	background-color:#FCAF3E;
+	display :flex;
+	flex-direction:column;
+}
+#error a{
+	height:154px;
+}
+a.img
+{
+margin-left: auto;
+    margin-right: auto;
+    	text-align: center;
+    
+    
+    }
+#errorinfo {
+	text-align: center;
+	margin :auto;
+	
+}
+
+ .button
+{
+    color: rgb(19, 51, 106);
+  vertical-align: top;
+  font-size: 0.7em;
+  }
+
+  .button:visited
+    {
+      color: rgb(27, 70, 144);
+      }
+      .button:hover {
+        color: blue;
+      }
