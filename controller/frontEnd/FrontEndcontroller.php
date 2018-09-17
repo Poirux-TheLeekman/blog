@@ -2,7 +2,6 @@
 require_once ('model/FrontEnd/CommentManager.php');
 require_once ('model/FrontEnd/ArticleManager.php');
 
-
 // comments controllers
         function listcomment($postId)  //get comment content by id
             {
@@ -40,10 +39,10 @@ require_once ('model/FrontEnd/ArticleManager.php');
                  }
              }
              
-        function postcomment($author,$postcomment)   // add comment as new entry
+        function postcomment($id,$author,$postcomment)   // add comment as new entry
          {
              $commentManager= new Leekman\Blog\Model\CommentManager();
-             $affectedline= $commentManager-> addcomment($author,$postcomment);
+             $affectedline= $commentManager-> addcomment($id,$author,$postcomment);
              if ($affectedline === false) {
                  // Gestion de l'erreur à l'arrache
                  throw new Exception ('Impossible d\'ajouter le commentaire !');
@@ -59,8 +58,8 @@ require_once ('model/FrontEnd/ArticleManager.php');
          function  listarticles ()
          {
              $articlesManager= new Leekman\Blog\Model\ArticleManager();
-             $articles=$articlesManager->getarticles();
-             if ($articles === false){
+             $articleslist=$articlesManager->getarticles();
+             if ($articleslist === false){
                 throw new Exception ('impossible d\'obtenir les derniers articles!');
              }
              else{

@@ -22,8 +22,19 @@
                       $article->closeCursor();?>
                                    </ul>
        				 </article>
+       				 <h3>Laisser un Commentaire :</h3>
+       				 <form action="index.php?action=addcomment&article=<?= $id ?>" method="post">
+            <p>
+              <label for="author">Pseudo</label> : <input type="text" name="author" id="author" value="<?= $_POST['author'] ?>"/><br />
+              <label for="postcomment">Message</label> : <textarea  name="postcomment" id="postcomment" rows="8" cols="40"><?= $_POST['postcomment'] ?></textarea><br />
+
+              <input type="submit" value="Envoyer" />
+            </p>
+
+     	</form>
+       				 
        				 <aside>
-       				 <ul>
+       				 <ul> <h3>Derniers Commentaires :</h3>
                     <?php 
                     while ($data = $comments->fetch())
                     {

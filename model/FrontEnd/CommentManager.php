@@ -3,12 +3,14 @@ namespace Leekman\Blog\Model;
 require_once ('model/FrontEnd/Manager.php');
 Class CommentManager extends Manager
 {
+  
+    
     // send comment
-    public function addcomment ($author,$postcomment)
+    public function addcomment ($articleid,$author,$postcomment)
     {
         $db= $this->dbconnect();
-        $addcomment = $db->prepare('INSERT INTO comments(author, postcomment, datetime) VALUES (:author, :postcontent, NOW())');
-        $addcomment->execute(array('author' => $author, 'postcontent' => $postcomment));
+        $addcomment = $db->prepare('INSERT INTO comments(idarticle, author, postcomment, datetime) VALUES (:idarticle,:author, :postcontent, NOW())');
+        $addcomment->execute(array('idarticle'=> $articleid , 'author' => $author, 'postcontent' => $postcomment));
     }
     
     // get the 20 last comment

@@ -1,6 +1,9 @@
 <?php 
+Require ('CommentManager.php');
 
-Class Comment {
+use Leekman\Blog\Model\CommentManager;
+
+Class Comment extends CommentManager{
     
     //Attributs
     private $_id,
@@ -9,7 +12,6 @@ Class Comment {
     $_author,
     $_postcomment;
     
-    
     // constructeur - reçois un tableau
     public function __construct()
     {
@@ -17,10 +19,10 @@ Class Comment {
         
     }
     
-    // hydrate via tableau // array 
+    // hydrate via tableau // array
     public function hydrate(array $data)
     {
-      
+        
         foreach ($data as $key => $value)
         
         {
@@ -46,7 +48,8 @@ Class Comment {
         }
         
         
-}
+    }
+ 
             
       //getters
         public function id(){return $this ->_id;}

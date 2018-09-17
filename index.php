@@ -1,4 +1,5 @@
 <?php 
+
 require('controller/frontEnd/FrontEndcontroller.php');
 // define the default name and content for the forms
 if (empty($_POST['author'])|| (empty($_POST['postcomment'])) ){
@@ -11,8 +12,11 @@ try {
             if (isset($_GET['action'])){
                 if (($_GET['action'])=='login'){
                 require ('view/FrontEnd/login.php');
-                }
-                elseif (($_GET['action'])=='view'){
+                $admin=Leekman\Blog\Model\getAdmin();
+                if(($_POST['login'] == $admin['login'] || $_POST['$passwrd'] !=$admin['password'])){
+                    require ('view/FrontEnd/AdminView.php');
+                }}
+                elseif (($_GET['action'])=='view')
                     if ((isset($_GET['postId']))&&((int) $_GET['postId']>0)){                    
                         listcomment($_GET['postId']);
                     }    
@@ -39,7 +43,7 @@ try {
                 }   
                 elseif (($_GET['action'])=='addcomment'){
                     if(($_POST['author'] != "votre pseudo" || $_POST['postcomment'] !="votre message")){
-                        postcomment($_POST['author'],$_POST['postcomment']);
+                        postcomment($_GET['article'],$_POST['author'],$_POST['postcomment']);
                      
                     }
                     else {
@@ -49,7 +53,7 @@ try {
                     
                  }
                  
-            }
+            
             else {
                   listarticles();
                   

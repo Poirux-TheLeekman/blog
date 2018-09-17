@@ -6,22 +6,24 @@
      			            <h2> Articles :</h2>
      			            <ul>
      			            <?php
-     			            while ($data = $articles->fetch())
-     			            {
-     			                ?>
-                    <li><p class="pseudo"><strong>
-                        <?=   htmlspecialchars($data['title']) ?>
+     			     //     while ($article = $articles->fetch())
+     			      //     {
+     			     foreach ($articleslist as $article)  {         ?>
+                    <li><p class="pseudo"><strong>                    
+                       
+                       <?= $article->title()?>
                     </strong> : <q>
-                        <?=   htmlspecialchars($data['content']) ?>
-                    </q><div class="button"> <a href="index.php?action=view&article= <?=   htmlspecialchars($data['id']) ?>">  voir l'article </a> </div>
-                    <div class="dh">le
-                        <?= htmlspecialchars($data['datetimefr']) ?>
+                                               <?= $article->content()?>
+                        
+                    </q><div class="button"> <a href="index.php?action=view&article=<?= $article->id()?>">  voir l'article </a> </div>
+                    <div class="dh">le <?= $article->datetime()?>
+                    
                     </div></li>
                     
                     <?php
      			            }
 
-                      $articles->closeCursor();?>
+                   //   $articles->closeCursor();?>
                                    </ul>
        				 </article>
 		                      

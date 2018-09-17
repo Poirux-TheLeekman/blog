@@ -1,6 +1,9 @@
 <?php 
+namespace Leekman\Blog\Model;
 
-Class Article {
+
+require ('Model.php');
+Class Article extends Model{
     
     //Attributs
     private $_id,
@@ -8,16 +11,19 @@ Class Article {
     $_title,
     $_content;
     
+   // public function Article(array $data) {
+    //    return $this->hydrate();
+   // }
     
-    // constructeur - reçois un tableau
-    public function __construct()
+ // constructeur - reçois un tableau
+    public function __construct($data)
     {
-        $this->hydrate();
+        $this->hydrate($data);
         
     }
     
     // hydrate via tableau // array 
-    public function hydrate(array $data)
+  public function hydrate($data)
     {
       
         foreach ($data as $key => $value)
@@ -26,11 +32,11 @@ Class Article {
             
             // On récupère le nom du setter correspondant à l'attribut.
             
-            $method = 'set'.ucfirst($key);
+           $method = 'set'.ucfirst($key);
             
             
             
-            // Si le setter correspondant existe.
+        //     Si le setter correspondant existe.
             
             if (method_exists($this, $method))
             
@@ -83,7 +89,7 @@ Class Article {
             }
             else 'Titre non valide';
         }
-        public function setcontent ($content)
+        public function setContent ($content)
         {
             if (is_string($content))
             {
