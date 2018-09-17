@@ -17,12 +17,7 @@ Class ArticleManager extends Manager
        // return $articleslist;
         
         while ($newarticle=$articleslist->fetch(\PDO::FETCH_ASSOC)){
-            var_dump ($newarticle);
             $article=new Article($newarticle);
-            $article->setId($newarticle['id']);  
-            $article->setTitle($newarticle['title']);
-            $article->setContent($newarticle['content']);
-           $article->setDatetime($newarticle['datetime']);
             $articles[]=$article;
             
         }

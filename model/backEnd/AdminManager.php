@@ -1,15 +1,21 @@
 <?php 
-namespace Leekman\Blog\Model;
+use Leekman\Blog\Model\Manager;
+
+
 require_once ('model/FrontEnd/Manager.php');
-Class AdminManager extends Manager
-{
- 
- 
+Class AdminManager extends Manager{
+    
     public function getAdmin()
     {
         $db= $this->dbconnect();
-        $admin= $db->query('SELECT login, password FROM admin');
-        return $admin;
+        $admindb= $db->query('SELECT login, password FROM admin');
+        while ($admindb->fetch()){
+            $adminlogin=$admindb['login'];
+            $adminpassword=$admindb['password'];
+        }
+            
+        return $adminlogin;
+        return $adminpassword;
     }
-    
-}
+        
+    }

@@ -11,47 +11,14 @@ Class Article extends Model{
     $_title,
     $_content;
     
-   // public function Article(array $data) {
-    //    return $this->hydrate();
-   // }
     
  // constructeur - reçois un tableau
+ 
     public function __construct($data)
     {
         $this->hydrate($data);
         
     }
-    
-    // hydrate via tableau // array 
-  public function hydrate($data)
-    {
-      
-        foreach ($data as $key => $value)
-        
-        {
-            
-            // On récupère le nom du setter correspondant à l'attribut.
-            
-           $method = 'set'.ucfirst($key);
-            
-            
-            
-        //     Si le setter correspondant existe.
-            
-            if (method_exists($this, $method))
-            
-            {
-                
-                // On appelle le setter.
-                
-                $this->$method($value);
-                
-            }
-            
-        }
-        
-        
-}
             
       //getters
         public function id(){return $this ->_id;}
@@ -64,7 +31,7 @@ Class Article extends Model{
         public function setId($id)
         {
             $id=(int)$id;
-            if ($id>O)
+            if ($id>0)
             {
                 $this->_id=$id;
             }
