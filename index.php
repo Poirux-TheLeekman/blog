@@ -1,18 +1,38 @@
 <?php 
-
 require('controller/frontEnd/FrontEndcontroller.php');
 require ('controller/backEnd/AdminController.php');
+session_start();
 // define the default name and content for the forms
 if (empty($_POST['author'])|| (empty($_POST['postcomment'])) ){
     $_POST['author'] = "votre pseudo" ;
     $_POST['postcomment'] ="votre message";
 }
+if (empty($_SESSION['IsAdmin'])){
+    $_SESSION['IsAdmin']=FALSE;
+}
 // router 
 try {
     if (isset($_GET['action']))  
     {
-        if (($_GET['action'])=='admin'){
-        $admin= new AdminController($_POST['login'],$_POST['password']);    
+        if (($_GET['action'])=='new'){
+            
+            if ($_SESSION['IsAdmin']===TRUE){
+                require ('view/BackEnd/NewArticleView.php');
+                
+            }
+            else {
+                throw new Exception('vous n\'êtes pas authorisé à ajouter un article');
+            }
+            
+            
+        }
+        elseif (($_GET['action'])=='admin'){
+            
+        isAdmin($_POST['login'],$_POST['password']);
+        listarticles();
+        listcomments();
+        
+        
       }
 
                 elseif (($_GET['action'])=='login'){

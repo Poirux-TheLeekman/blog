@@ -2,7 +2,7 @@
 namespace Leekman\Blog\Model;
 
 
-require ('Model.php');
+require_once('model/Model.php');
 Class Article extends Model{
     
     //Attributs

@@ -1,4 +1,6 @@
-<?php $title="identification"?>
+<?php $title="identification";
+$headaddon=null;?>
+
             <?php ob_start(); ?>
     
     	<form action="index.php?action=admin" method="post">

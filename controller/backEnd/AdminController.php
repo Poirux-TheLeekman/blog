@@ -1,16 +1,18 @@
 <?php 
-require_once ('model/backEnd/AdminManager.php');
+use Leekman\Blog\Model\AdminManager;
+require_once ('model/BackEnd/AdminManager.php');
 
-Class AdminController extends AdminManager
-{
-    public function isAdmin($postlogin,$postpasswrd)
+    
+    function isAdmin($postlogin,$postpassword)
     {
         $admin= new AdminManager();
         
-        $admin->getAdmin();
-            if($postlogin == $adminlogin || $postpasswrd ==$adminpassword)
+        $adminid=$admin->getAdmin();
+        
+            if($postlogin == $adminid->login() && $postpassword == $adminid->password())
                 {     
-                    require ('view/FrontEnd/AdminView.php');
+                    $_SESSION['IsAdmin']=TRUE;
+                    require ('view/BackEnd/AdminView.php');
                     
                 }
                 else 
@@ -20,4 +22,4 @@ Class AdminController extends AdminManager
                 
         }
         
-    }
+    

@@ -1,4 +1,5 @@
-<?php $title="Un billet pour l'Alaska : Article : ".$idarticle?>
+<?php $title="Un billet pour l'Alaska : Article : ".$idarticle;
+$headaddon=null;?>
 					<?php  ob_start();?>
      			    
      			            <article>

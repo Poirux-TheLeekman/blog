@@ -1,6 +1,6 @@
 <?php 
 namespace Leekman\Blog\Model;
-require_once ('model/FrontEnd/Manager.php');
+require_once ('model/Manager.php');
 Class CommentManager extends Manager
 {
   

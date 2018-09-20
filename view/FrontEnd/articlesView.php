@@ -1,4 +1,5 @@
-<?php $title="Blog : Un billet pour l'Alaska";?>
+<?php $title="Blog : Un billet pour l'Alaska";
+$headaddon=null;?>
 
 					<?php  ob_start();?>
      			    
@@ -13,10 +14,10 @@
                        
                        <?= $article->title()?>
                     </strong> : <q>
-                                               <?= $article->content()?>
+                                               <?= substr($article->content(),0,300).' ...'?>
                         
-                    </q><div class="button"> <a href="index.php?action=view&article=<?= $article->id()?>">  voir l'article </a> </div>
-                    <div class="dh">le <?= $article->datetime()?>
+                    </q><div class="button"> <a href="index.php?action=view&article=<?= $article->id()?>">  voir l'article en entier </a> </div>
+                    <div class="dh">le <?=$article->datetime()?>
                     
                     </div></li>
                     
