@@ -70,8 +70,8 @@ require_once ('model/FrontEnd/ArticleManager.php');
          {
              $articleManager= new Leekman\Blog\Model\ArticleManager();
              $article=$articleManager->getarticle($id);
-             $commentManager= new Leekman\Blog\Model\CommentManager();
-             $comments= $commentManager -> getarticlecomments($id);
+             $commentslist= new Leekman\Blog\Model\CommentManager();
+             $comments= $commentslist -> getarticlecomments($id);
              
              if ($article === false){
                  throw new Exception ('impossible d\'obtenir les derniers articles!');

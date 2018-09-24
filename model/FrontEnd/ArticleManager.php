@@ -27,9 +27,12 @@ Class ArticleManager extends Manager
     public function getarticle($id){
         
         $db= $this->dbconnect();
-        $article = $db->prepare('SELECT title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime FROM articles WHERE id=?');
+        $getarticle = $db->prepare('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime FROM articles WHERE id=?');
         // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
-        $article->execute(array($id));
+        
+        $getarticle->execute(array ($id));
+            while ($articledata=$getarticle->fetch()){
+            $article=new Article($articledata);}
         return $article;
     }
     // methode delete

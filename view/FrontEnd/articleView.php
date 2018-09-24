@@ -1,26 +1,16 @@
-<?php $title="Un billet pour l'Alaska : Article : ".$idarticle;
+<?php $title='Un billet pour l\'Alaska : Article  '.$article->id();
 $headaddon=null;?>
 					<?php  ob_start();?>
-     			    
      			            <article>
      			            <h2> Article :</h2>
      			            <ul>
-     			            <?php
-     			            while ($data = $article->fetch())
-     			            {
-     			                ?>
                     <li><p class="pseudo"><strong>
-                        <?=   htmlspecialchars($data['title']) ?>
+                        <?=   $article->title(); ?>
                     </strong> : <q>
-                        <?=   htmlspecialchars($data['content']) ?>
+                        <?=   $article->content()?>
                     <div class="dh">le
-                        <?= htmlspecialchars($data['datetimefr']) ?>
+                        <?= $article->datetime() ?>
                     </div></li>
-                    
-                    <?php
-     			            }
-
-                      $article->closeCursor();?>
                                    </ul>
        				 </article>
        				 <h3>Laisser un Commentaire :</h3>
@@ -37,20 +27,16 @@ $headaddon=null;?>
        				 <aside>
        				 <ul> <h3>Derniers Commentaires :</h3>
                     <?php 
-                    while ($data = $comments->fetch())
-                    {
-                        ?>
+                    foreach ($comments as $comment){ ?>
                    <li> <div class="postview"><p class="pseudo"><strong>
-                        <?=   htmlspecialchars($data['author']) ?>
+                        <?=   htmlspecialchars($comment->author()) ?>
                     </strong> a dit <q>
-                        <?=  nl2br (htmlspecialchars($data['postcomment'])) ?>
-                    </q><br /></p><a href="index.php?action=view&postId=<?=   nl2br ($data['id']) ?>" class="button">modifier</a></div>
-                    <div class="dh">le<?=   nl2br($data['datetimefr']) ?>
+                        <?=  nl2br (htmlspecialchars($comment->postcomment())) ?>
+                    </q><br /></p><a href="index.php?action=report&postId=<?=   nl2br ($data['id']) ?>" class="button">Signaler</a></div>
+                    <div class="dh">le<?=   nl2br($comment->datetime()) ?>
                     </div></li>
                     <?php
-                        }
-
-                      $comments->closeCursor();
+                    }
                     ?>
               </ul>
        				 </aside>

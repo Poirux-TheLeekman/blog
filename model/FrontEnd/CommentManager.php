@@ -1,5 +1,6 @@
 <?php 
 namespace Leekman\Blog\Model;
+require_once ('model/FrontEnd/Comment.php');
 require_once ('model/Manager.php');
 Class CommentManager extends Manager
 {
@@ -25,11 +26,12 @@ Class CommentManager extends Manager
     public function getcomment($postId)
     {
         $db= $this->dbconnect();
-        $comment = $db->prepare('SELECT author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetimefr  FROM comments WHERE id = ?');
-        $comment->execute(array($postId));
+        $commentsbyid = $db->prepare('SELECT author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetimefr  FROM comments WHERE id = ?');
+        $commentsbyid->execute(array($postId));
+        
         return $comment;
     }
-    //edit comment identied by id
+    //edit comment identified by id
     public function updcomment($postId,$author,$postcomment)
     {
         $db= $this->dbconnect();
@@ -40,9 +42,14 @@ Class CommentManager extends Manager
     // get comments by identified by idarticle
     public function getarticlecomments($id)
     {
+        $comments=[];
         $db= $this->dbconnect();
-        $comments = $db->prepare('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetimefr  FROM comments WHERE idarticle = ?');
-        $comments->execute(array($id));
+        $commentsreq = $db->prepare('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime  FROM comments WHERE idarticle = ?');
+        $commentsreq->execute(array($id));
+        while ($commentsdata=$commentsreq->fetch()){
+            $commentdata= new \Comment($commentsdata);
+            $comments[]=$commentdata;
+        }
         return $comments;
     }
     // methode delete

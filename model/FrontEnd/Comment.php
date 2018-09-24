@@ -1,9 +1,9 @@
 <?php 
-Require ('CommentManager.php');
+require_once('model/Model.php');
 
-use Leekman\Blog\Model\CommentManager;
+use Leekman\Blog\Model\Model;
 
-Class Comment extends CommentManager{
+Class Comment extends Model{
     
     //Attributs
     private $_id,
@@ -13,42 +13,13 @@ Class Comment extends CommentManager{
     $_postcomment;
     
     // constructeur - reçois un tableau
-    public function __construct()
+    public function __construct($data)
     {
-        $this->hydrate();
+        $this->hydrate($data);
         
     }
     
-    // hydrate via tableau // array
-    public function hydrate(array $data)
-    {
-        
-        foreach ($data as $key => $value)
-        
-        {
-            
-            // On récupère le nom du setter correspondant à l'attribut.
-            
-            $method = 'set'.ucfirst($key);
-            
-            
-            
-            // Si le setter correspondant existe.
-            
-            if (method_exists($this, $method))
-            
-            {
-                
-                // On appelle le setter.
-                
-                $this->$method($value);
-                
-            }
-            
-        }
-        
-        
-    }
+
  
             
       //getters
@@ -63,7 +34,7 @@ Class Comment extends CommentManager{
         public function setId($id)
         {
             $id=(int)$id;
-            if ($id>O)
+            if ($id>0)
             {
                 $this->_id=$id;
             }

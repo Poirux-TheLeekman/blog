@@ -12,12 +12,12 @@ $headaddon=null;?>
      			     foreach ($articleslist as $article)  {         ?>
                     <li><p class="pseudo"><strong>                    
                        
-                       <?= $article->title()?>
+                       <?= htmlspecialchars($article->title())?>
                     </strong> : <q>
-                                               <?= substr($article->content(),0,300).' ...'?>
+                                               <?= htmlspecialchars(substr($article->content(),0,300).' ...')?>
                         
                     </q><div class="button"> <a href="index.php?action=view&article=<?= $article->id()?>">  voir l'article en entier </a> </div>
-                    <div class="dh">le <?=$article->datetime()?>
+                    <div class="dh">le <?=htmlspecialchars($article->datetime())?>
                     
                     </div></li>
                     
