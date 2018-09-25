@@ -43,4 +43,8 @@ Class ArticleManager extends Manager
         // la suppression a fonctionnée
         return ($delete->rowCount())? true: false;
     }
+    public function addarticle()
+    {
+        
+    }
 }

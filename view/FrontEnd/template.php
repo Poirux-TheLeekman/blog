@@ -8,8 +8,8 @@
         <link rel="stylesheet" href="public/style.css" />
         <?= $headaddon ?>
     </head>
-    
-	<header>            <div class="button">  <a href="index.php?action=login">Connexion</a></div>
+    <header>
+    	<div class="button"><a href="<?=$_SESSION['logurl']?>">	<?=$_SESSION['logbutton']?></a></div>
 	</header>
 	
 	<body>

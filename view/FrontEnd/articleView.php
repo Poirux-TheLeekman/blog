@@ -32,7 +32,7 @@ $headaddon=null;?>
                         <?=   htmlspecialchars($comment->author()) ?>
                     </strong> a dit <q>
                         <?=  nl2br (htmlspecialchars($comment->postcomment())) ?>
-                    </q><br /></p><a href="index.php?action=report&postId=<?=   nl2br ($data['id']) ?>" class="button">Signaler</a></div>
+                    </q><br /></p><a href="index.php?action=view&postId=<?=   nl2br ($comment->id()) ?>" class="button">Signaler</a></div>
                     <div class="dh">le<?=   nl2br($comment->datetime()) ?>
                     </div></li>
                     <?php

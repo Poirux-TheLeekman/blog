@@ -6,7 +6,7 @@ Class CommentManager extends Manager
 {
   
     
-    // send comment
+    // add a comment to article identified by id
     public function addcomment ($articleid,$author,$postcomment)
     {
         $db= $this->dbconnect();
@@ -26,8 +26,11 @@ Class CommentManager extends Manager
     public function getcomment($postId)
     {
         $db= $this->dbconnect();
-        $commentsbyid = $db->prepare('SELECT author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetimefr  FROM comments WHERE id = ?');
-        $commentsbyid->execute(array($postId));
+        $commentbyid = $db->prepare('SELECT id,author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime  FROM comments WHERE id = ?');
+        $commentbyid->execute(array($postId));
+        while ($commentdata=$commentbyid->fetch()){
+            $comment = new \Comment($commentdata);
+        }
         
         return $comment;
     }

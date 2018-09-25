@@ -3,20 +3,15 @@
         <article>
               <h2> message d'origine:</h2>
               <ul>
-                    <?php
-                         while ($data = $comment->fetch())
-                        {
-                        ?>
                     <li><p class="pseudo"><strong>
-                        <?=   htmlspecialchars($data['author']) ?>
+                        <?=   htmlspecialchars($comment->author()) ?>
                     </strong> a dit <q>
-                        <?=  nl2br(htmlspecialchars($data['postcomment'])) ?>
+                        <?=  nl2br(htmlspecialchars($comment->postcomment())) ?>
                     </q><br /></p>
-                    <div>le<?=   nl2br($data['datetimefr']) ?>
+                    <div>le<?=   nl2br($comment->datetime()) ?>
                     </div></li></ul>
                     <?php
-                        }
-                      $comment->closeCursor();
+           
                         ?>
         </article>
   <form action="index.php?action=edit&postId=<?= ($_GET['postId']) ?>" method="post">
