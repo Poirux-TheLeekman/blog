@@ -84,9 +84,10 @@ Class Comment extends Model{
             {
                 $this->_postcomment = $postcomment;
             }
+            else{
             throw new \Exception( 'contenu d\'article non valide');
+            }
         }
-        
       
 }
 
