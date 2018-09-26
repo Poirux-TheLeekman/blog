@@ -38,6 +38,10 @@ Class Comment extends Model{
             {
                 $this->_id=$id;
             }
+            else {
+                throw new \Exception ('identifiant non valide');
+                
+            }
             
         }
         public function setIdarticle($idarticle)
@@ -46,6 +50,10 @@ Class Comment extends Model{
             if ($idarticle>O)
             {
                 $this->_idarticle=$idarticle;
+            }
+            else {
+                throw new \Exception ('identifiant d\'article non valide');
+                
             }
             
         }
@@ -57,7 +65,7 @@ Class Comment extends Model{
                 $this->_datetime = $datetime;
             }
             else
-               echo 'format de date non valide';
+               throw new \Exception( 'format de date non valide');
         }
         public function setAuthor($author)
         {
@@ -66,7 +74,9 @@ Class Comment extends Model{
             {
                 $this->_author = $author;
             }
-            else 'Pseudo non valide';
+            else {
+                throw new \Exception ('Pseudo non valide');
+            }
         }
         public function setPostcomment ($postcomment)
         {
@@ -74,7 +84,7 @@ Class Comment extends Model{
             {
                 $this->_postcomment = $postcomment;
             }
-            else 'contenu d\'article non valide';
+            throw new \Exception( 'contenu d\'article non valide');
         }
         
       
