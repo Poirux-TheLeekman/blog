@@ -1,4 +1,7 @@
-<?php $title="erreur"?>
+<?php $title="erreur";
+session_start();
+?>
+
             <?php ob_start(); ?>
         <article>
                <div id="error">

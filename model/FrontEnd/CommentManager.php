@@ -23,11 +23,11 @@ Class CommentManager extends Manager
     }
     
     // get comment identified by id
-    public function getcomment($postId)
+    public function getcomment($id)
     {
         $db= $this->dbconnect();
-        $commentbyid = $db->prepare('SELECT id,author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime  FROM comments WHERE id = ?');
-        $commentbyid->execute(array($postId));
+        $commentbyid = $db->prepare('SELECT id,author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime,report  FROM comments WHERE id = ?');
+        $commentbyid->execute(array($id));
         while ($commentdata=$commentbyid->fetch()){
             $comment = new \Comment($commentdata);
         }
@@ -47,7 +47,7 @@ Class CommentManager extends Manager
     {
         $comments=[];
         $db= $this->dbconnect();
-        $commentsreq = $db->prepare('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime  FROM comments WHERE idarticle = ?');
+        $commentsreq = $db->prepare('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, report  FROM comments WHERE idarticle = ?');
         $commentsreq->execute(array($id));
         while ($commentsdata=$commentsreq->fetch()){
             $commentdata= new \Comment($commentsdata);
@@ -63,4 +63,21 @@ Class CommentManager extends Manager
         // la suppression a fonctionnée
         return ($delete->rowCount())? true: false;
     }
+    public function allcomments_id (){
+        $listid_comments=[];
+        $db= $this->dbconnect();
+        $allcomments_id= $db->query('SELECT id FROM comments');
+        while ($id=$allcomments_id->fetch()){
+            $listid_comments[]=$id;
+        }
+        return $listid_comments;
+    }
+    public function updatereport ($id,$report){
+        $db= $this->dbconnect();
+        $updatereport = $db->PREPARE('UPDATE comments SET report=? WHERE id = ?');
+        $updatereport->execute(array($report,$id));
+        
+    }
+    
+    
 }

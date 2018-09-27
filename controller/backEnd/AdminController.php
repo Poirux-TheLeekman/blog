@@ -9,8 +9,9 @@ require_once ('model/FrontEnd/ArticleManager.php');
     {
         $admin= new AdminManager();
         $adminid=$admin->getAdmin();
+    
         
-            if($postlogin == $adminid->login() && $postpassword == $adminid->password())
+        if($postlogin == $adminid->login() && password_verify($postpassword, $adminid->password()) === TRUE)
                 {     
                     $_SESSION['IsAdmin']=TRUE;
                     $_SESSION['logbutton']='Déconnexion';
@@ -25,6 +26,7 @@ require_once ('model/FrontEnd/ArticleManager.php');
                 }
                 
         }
+        
         
         
         // comments controllers
@@ -106,4 +108,11 @@ require_once ('model/FrontEnd/ArticleManager.php');
             }
         }
         
+        function newarticle (){
+            require ('view/BackEnd/NewArticleView.php');           
+        }
+        function isadmin(){
+            require ('view/BackEnd/AdminView.php');
+            
+        }
         

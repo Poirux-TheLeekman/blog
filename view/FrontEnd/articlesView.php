@@ -7,7 +7,7 @@ $headaddon=null;?>
      			            <h2> Articles :</h2>
      			            <ul>
      			            <?php
-     			     foreach ($articleslist as $article)  {         ?>
+     			            foreach ($filtered_articles as $article)  { ?>
                     <li><p class="pseudo"><strong>                    
                        
                        <?= htmlspecialchars($article->title())?>
@@ -19,7 +19,8 @@ $headaddon=null;?>
                     
                     </div></li>
                     
-                    <?php } ?>
+                    <?php 
+     			     } ?>
                                    </ul>
        				 </article>
 		                      

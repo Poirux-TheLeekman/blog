@@ -12,7 +12,7 @@ Class ArticleManager extends Manager
     {
         $articles=[];
         $db= $this->dbconnect();
-        $articleslist = $db->query('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime FROM articles ORDER BY id ASC LIMIT 0, 5');
+        $articleslist = $db->query('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, publish FROM articles ORDER BY id ASC');
         // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
        // return $articleslist;
         

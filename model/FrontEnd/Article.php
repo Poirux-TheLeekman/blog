@@ -9,7 +9,8 @@ Class Article extends Model{
     private $_id,
     $_datetime,
     $_title,
-    $_content;
+    $_content,
+    $_publish;
     
     
  // constructeur - reçois un tableau
@@ -25,6 +26,8 @@ Class Article extends Model{
         public function datetime(){return $this->_datetime;}
         public function title(){return $this ->_title;}
         public function content(){return $this ->_content;}
+        public function publish(){return $this ->_publish;}
+        
             
             
       //setters
@@ -44,8 +47,9 @@ Class Article extends Model{
             {
                 $this->_datetime = $datetime;
             }
-            else
-               echo 'format de date non valide';
+            else{
+               throw new \Exception('format de date non valide');
+            }
         }
         public function setTitle($title)
         {
@@ -54,7 +58,9 @@ Class Article extends Model{
             {
                 $this->_title = $title;
             }
-            else 'Titre non valide';
+            else {
+                throw new \Exception('Titre non valide');
+            }
         }
         public function setContent ($content)
         {
@@ -62,7 +68,23 @@ Class Article extends Model{
             {
                 $this->_content = $content;
             }
-            else 'contenu d\'article non valide';
+            else {
+                throw new \Exception('contenu d\'article non valide');
+                
+            }
+                'contenu d\'article non valide';
+        }
+        public function setPublish ($publish)
+        {
+            $publish=(int)$publish;
+            
+            if ($publish == 0 ||$publish == 1)
+            {
+                $this->_publish = $publish;
+            }
+            else {
+                throw new \Exception('unrecognized publication status');
+            }
         }
 }
 

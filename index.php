@@ -24,7 +24,7 @@ try {
            
             case 'new':{
                 if ($_SESSION['IsAdmin']===TRUE){
-                    require ('view/BackEnd/NewArticleView.php');
+                    newarticle();
                 }
                 else {
                     throw new Exception('vous n\'êtes pas authorisé à ajouter un article');
@@ -36,8 +36,7 @@ try {
             case 'admin':{
                 getAdmin($_POST['login'],$_POST['password']);
                 if ($_SESSION['IsAdmin']===TRUE){
-                    require ('view/BackEnd/AdminView.php');
-                    
+                    isadmin();
                 }
                 else {
                     throw new Exception('vous n\'êtes pas connecté.');
@@ -46,12 +45,8 @@ try {
             }
             break;
             case 'login':{
-                if ($_SESSION['IsAdmin']===TRUE){
-                    throw new Exception('vous êtes deja connecté.');
-                }
-                else {
-                    require ('view/FrontEnd/login.php');
-                }    
+                login();
+                
             }
             break;
             case 'view':{
@@ -116,6 +111,16 @@ try {
                 listcomments();
             }
             break;
+            case 'report':{
+                if ((isset($_GET['id']))&&((int) $_GET['id']>0)){
+                    reportcomment($_GET['id']);
+                }
+                else {
+                    throw new Exception('N° de commentaire invalide');
+                    
+                }
+            }
+            break;
             case '':{
                 throw new Exception('action interdite');
             }
@@ -124,6 +129,7 @@ try {
         } //end switch
     }  //end  if
     else {
+        
         listarticles();
     }
 } catch (Exception $e) {

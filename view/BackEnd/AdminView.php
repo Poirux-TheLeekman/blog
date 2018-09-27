@@ -1,7 +1,5 @@
 <?php $title="Blog : Administration";
 $headaddon= null;
-session_start();
-
 ?>
 
 <?php  ob_start();?>

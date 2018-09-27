@@ -27,12 +27,14 @@ $headaddon=null;?>
        				 <aside>
        				 <ul> <h3>Derniers Commentaires :</h3>
                     <?php 
-                    foreach ($comments as $comment){ ?>
+                    foreach ($comments as $comment){ 
+                    ?>
+                    
                    <li> <div class="postview"><p class="pseudo"><strong>
                         <?=   htmlspecialchars($comment->author()) ?>
                     </strong> a dit <q>
                         <?=  nl2br (htmlspecialchars($comment->postcomment())) ?>
-                    </q><br /></p><a href="index.php?action=view&postId=<?=   nl2br ($comment->id()) ?>" class="button">Signaler</a></div>
+                    </q><br /></p><a href="index.php?action=report&id=<?=   nl2br ($comment->id()) ?>" class="button">Signaler</a></div>
                     <div class="dh">le<?=   nl2br($comment->datetime()) ?>
                     </div></li>
                     <?php

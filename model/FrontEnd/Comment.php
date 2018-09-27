@@ -10,7 +10,8 @@ Class Comment extends Model{
     $_idarticle,
     $_datetime,
     $_author,
-    $_postcomment;
+    $_postcomment,
+    $_report;
     
     // constructeur - reçois un tableau
     public function __construct($data)
@@ -28,6 +29,8 @@ Class Comment extends Model{
         public function datetime(){return $this->_datetime;}
         public function author(){return $this ->_author;}
         public function postcomment(){return $this ->_postcomment;}
+        public function report(){return $this ->_report;}
+        
             
             
       //setters
@@ -86,6 +89,18 @@ Class Comment extends Model{
             }
             else{
             throw new \Exception( 'contenu d\'article non valide');
+            }
+        }
+        public function setReport ($report)
+        {
+            $report=(int)$report;
+            
+            if ($report == 0 ||$report == 1)
+            {
+                $this->_report = $report;
+            }
+            else {
+                throw new \Exception('unrecognized report status');
             }
         }
       

@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 require_once ('model/FrontEnd/CommentManager.php');
 require_once ('model/FrontEnd/ArticleManager.php');
 
@@ -52,6 +54,21 @@ require_once ('model/FrontEnd/ArticleManager.php');
                  ;
              }
          }
+         function reportcomment($id){
+             $commentManager= new Leekman\Blog\Model\CommentManager();
+                 $currentcomment= $commentManager->getcomment($id);
+                 if ($currentcomment->report()===1){
+                     throw new Exception ('ce commentaire a déja été signalé, merci !');
+                 }
+                 else {
+                     $update=$commentManager->updatereport($id,1);
+                     header('Location: index.php');
+                     
+                 }
+                 if ($update === FALSE){
+                     throw new Exception ('commentaire inexistant !');
+                 }
+         }
          
     // articles controllers
     
@@ -62,9 +79,12 @@ require_once ('model/FrontEnd/ArticleManager.php');
              if ($articleslist === false){
                 throw new Exception ('impossible d\'obtenir les derniers articles!');
              }
-             else{
-                 require ('view/FrontEnd/articlesView.php');
-             }    
+             else {
+                   $statut=1;
+                   filtered_articles($articleslist, $statut);
+             }
+                 
+                 
          }
          function  listarticle ($id)
          {
@@ -79,5 +99,24 @@ require_once ('model/FrontEnd/ArticleManager.php');
              else{
                  require ('view/FrontEnd/articleView.php');
              }
+         }
+         
+         function filtered_articles (array $articleslist,$statut){
+             $filtered_articles=[];
+             foreach ($articleslist as $article)  {
+                 if ($article->Publish() === $statut){
+                     $filtered_articles[]=$article;
+                 }}
+                 require ('view/FrontEnd/articlesView.php');
+                 
+         }
+         function login(){
+             if ($_SESSION['IsAdmin']===TRUE){
+                 throw new Exception('vous êtes deja connecté.');
+                 $_SESSION['urlredir']='view/BackEnd/AdminView.php';
+             }
+             else {
+                 require ('view/FrontEnd/login.php');
+             }   
          }
 
