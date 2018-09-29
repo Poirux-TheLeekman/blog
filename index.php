@@ -18,7 +18,11 @@ if (!isset($_SESSION['IsAdmin'])){
     
     ///////////////////
     
-try {       
+try { 
+    if ((isset($_POST['login'])) || (isset($_POST['password']))){
+        getAdmin($_POST['login'],$_POST['password']);
+        
+    }
     if ((isset($_GET['action']))){
         switch ($_GET['action']){
            
@@ -32,34 +36,29 @@ try {
                 }
             }
             break;
-            
-            case 'admin':{
-                getAdmin($_POST['login'],$_POST['password']);
-                if ($_SESSION['IsAdmin']===TRUE){
-                    isadmin();
-                }
-                else {
-                    throw new Exception('vous n\'êtes pas connecté.');
-                    
-                }                    
-            }
-            break;
             case 'login':{
                 login();
                 
             }
             break;
             case 'view':{
-                if ((isset($_GET['postId']))&&((int) $_GET['postId']>0)){
+                if (isset($_POST['statutarticles']) )
+                {
+                    var_dump($_POST['statutarticles']);
+                    $statut=$_POST['statutarticles'];
+                    adminarticlesbystatut($statut);
+                    ; 
+                }
+                elseif ((isset($_GET['postId']))&&((int) $_GET['postId']>0)){
                     if ($_SESSION['IsAdmin']===TRUE){
                         adminlistcomment($_GET['postId']);
                     }
                     else {
                         listcomment($_GET['postId']);
                     }
-                    
                 }
-                elseif ((isset($_GET['article']))&&($_GET['article'] > 0)){
+                elseif ((isset($_GET['article']))&& in_array($_GET['article'], $_SESSION['idarticles']))
+                {
                     if ($_SESSION['IsAdmin']===TRUE){
                         adminlistarticle($_GET['article']);
                     }
@@ -129,8 +128,14 @@ try {
         } //end switch
     }  //end  if
     else {
-        
-        listarticles();
+        if ($_SESSION['IsAdmin']===TRUE){
+            isadmin();
+        }
+        else {
+            $statut=1;
+            listarticlesbystatut($statut);
+        }
+
     }
 } catch (Exception $e) {
     $errorMessage=$e->getMessage();

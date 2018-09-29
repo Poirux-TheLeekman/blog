@@ -3,7 +3,7 @@ $headaddon=null;?>
 
             <?php ob_start(); ?>
     
-    	<form action="index.php?action=admin" method="post">
+    	<form action="index.php" method="post">
             <p>
             <h2>Identifiez vous </h2>
               <label for="login">Login</label> : <input type="text" name="login" id="login" value="<?= $_POST['author'] ?>"/><br />

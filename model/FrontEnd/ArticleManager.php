@@ -7,7 +7,7 @@ require_once ('model/Manager.php');
 Class ArticleManager extends Manager
 {
     
-    // get the last 5 articles
+    // get the articles
     public function getarticles()
     {
         $articles=[];
@@ -23,8 +23,36 @@ Class ArticleManager extends Manager
         }
         return $articles;
     }
+    // get the last  article
+    public function getlastarticle()
+    {
+        
+        $db= $this->dbconnect();
+        $getlastarticle = $db->query('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, publish from articles order by datetime DESC limit 0,1');
+        // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
+        while ($newarticle=$getlastarticle->fetch(\PDO::FETCH_ASSOC)){
+            $lastarticle=new Article($newarticle);
+        }
+        return $lastarticle;
+       
+    }
+    // get article identified by statut
+    public function getarticlesbystatut($statut){
+        
+        $db= $this->dbconnect();
+        $getarticles = $db->prepare('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime FROM articles WHERE publish=?');
+        // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
+        
+        $getarticles->execute(array ($statut));
+        $articles=[];
+        while ($newarticle=$getarticles->fetch(\PDO::FETCH_ASSOC)){
+            $article=new Article($newarticle);
+            $articles[]=$article;
+        }
+        return $articles;
+    }
     // get article identified by idauthor
-    public function getarticle($id){
+    public function getarticlebyid($id){
         
         $db= $this->dbconnect();
         $getarticle = $db->prepare('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime FROM articles WHERE id=?');

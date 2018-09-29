@@ -1,5 +1,7 @@
 <?php 
+session_start();
 use Leekman\Blog\Model\AdminManager;
+use Leekman\Blog\Model\CommentManager;
 require_once ('model/BackEnd/AdminManager.php');
 require_once ('model/FrontEnd/CommentManager.php');
 require_once ('model/FrontEnd/ArticleManager.php');
@@ -16,8 +18,6 @@ require_once ('model/FrontEnd/ArticleManager.php');
                     $_SESSION['IsAdmin']=TRUE;
                     $_SESSION['logbutton']='Déconnexion';
                     $_SESSION['logurl']='view/BackEnd/logout.php';
-                    require ('view/BackEnd/AdminView.php');
-                    
                     
                 }
                 else 
@@ -81,6 +81,7 @@ require_once ('model/FrontEnd/ArticleManager.php');
         }
         
         // articles controllers
+       
         
         function  adminlistarticles ()
         {
@@ -89,8 +90,8 @@ require_once ('model/FrontEnd/ArticleManager.php');
             if ($articleslist === false){
                 throw new Exception ('impossible d\'obtenir les derniers articles!');
             }
-            else{
-                require ('view/BackEnd/ArticlesView.php');
+            else {
+                require ('view/BEnd/articlesView.php');
             }
         }
         function  adminlistarticle ($id)
@@ -111,8 +112,70 @@ require_once ('model/FrontEnd/ArticleManager.php');
         function newarticle (){
             require ('view/BackEnd/NewArticleView.php');           
         }
-        function isadmin(){
-            require ('view/BackEnd/AdminView.php');
+        function idarticles(){
+            $idarticles=[];
+            $articlesManager= new Leekman\Blog\Model\ArticleManager();
+            $articles=$articlesManager->getarticles();
+            if ($articles === false){
+                throw new Exception ('impossible d\'obtenir les derniers articles!');
+            }
+            else {
+                foreach ($articles as $article){
+                    $idarticles[]=$article->id();
+                }
+                $_SESSION['idarticles']=$idarticles;
+                
+            }
             
+        }
+        function idcomments(){
+            $idcomments=[];
+            $commentsManager= new Leekman\Blog\Model\CommentManager();
+            $commentslist=$commentManager->getcomment();
+            if ($commentslist === false){
+                throw new Exception ('impossible d\'obtenir les derniers articles!');
+            }
+            else {
+                foreach ($commentslist as $comment){
+                    $idcomments[]=$comment->id();
+                }
+                $_SESSION['idcomments']=$idcomments;
+            }
+            
+        }
+        
+        function isadmin(){
+            $idarticles=[];
+            $titlesarticles=[];
+            $idcomments=[];
+            $lastcomments=new Leekman\Blog\Model\CommentManager();
+            $comments=$lastcomments->getlastcomments();
+            $articlesManager= new Leekman\Blog\Model\ArticleManager();
+            $articles=$articlesManager->getarticles();
+            $articleManager= new Leekman\Blog\Model\ArticleManager();
+            $lastarticle=$articleManager->getlastarticle();
+            if (($articles === false)|| ($lastarticle===false)){
+                throw new Exception ('impossible d\'obtenir les articles!');
+            }
+            else {
+                foreach ($articles as $article){
+                    $idarticles[]=$article->id();
+                }
+                $_SESSION['idarticles']=$idarticles;
+                require ('view/BackEnd/AdminView.php');
+                
+                
+            }// idcomments();
+            
+        }
+        
+        function adminarticlesbystatut($statut)
+        {
+            if ($statut===1 || $statut===0){
+                listarticlesbystatut($statut);
+            }
+            else {
+                adminlistarticles ();
+            }
         }
         

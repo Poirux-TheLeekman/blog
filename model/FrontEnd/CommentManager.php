@@ -15,11 +15,18 @@ Class CommentManager extends Manager
     }
     
     // get the 20 last comment
-    public function getcomments()
+    public function getlastcomments()
     {
+        $lastcomments=[];
         $db= $this->dbconnect();
-        $comments= $db->query('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetimefr FROM comments ORDER BY id DESC LIMIT 0, 20');
-        return $comments;
+        $comments= $db->query('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime,report FROM comments ORDER BY datetime DESC LIMIT 0, 5');
+        foreach ($comments as $data){
+            $comment=new \Comment($data);
+            $lastcomments[]=$comment;
+            
+        }
+  
+        return $lastcomments;
     }
     
     // get comment identified by id

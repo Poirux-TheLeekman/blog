@@ -7,7 +7,11 @@ $headaddon=null;?>
      			            <h2> Articles :</h2>
      			            <ul>
      			            <?php
-     			            foreach ($filtered_articles as $article)  { ?>
+     			            echo 'artlist';
+     			            var_dump($_SESSION['idarticles']);
+     			            echo '<h1>filtlist</h1></hr>';
+     			            var_dump($idarticles);
+     			            foreach ($listarticlesbystatut as $article)  { ?>
                     <li><p class="pseudo"><strong>                    
                        
                        <?= htmlspecialchars($article->title())?>
