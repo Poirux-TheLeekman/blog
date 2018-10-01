@@ -3,11 +3,11 @@ $headaddon=null;?>
 
             <?php ob_start(); ?>
     
-    	<form action="index.php" method="post">
+    	<form action="index.php?action=login" method="post">
             <p>
             <h2>Identifiez vous </h2>
               <label for="login">Login</label> : <input type="text" name="login" id="login" value="<?= $_POST['author'] ?>"/><br />
-              <label for="password">Password</label> : <input type="text" name="password" id="password" /><br />
+              <label for="password">Password</label> : <input type="password" name="password" id="password"  placeholder="8 characters minimum" /><br />
 
               <input type="submit" value="Envoyer" />
      	</form>     

@@ -2,7 +2,14 @@
 require_once ('model/FrontEnd/CommentManager.php');
 require_once ('model/FrontEnd/ArticleManager.php');
 
-include ('controlleur/frontEnd/FrontEndController.php');
+//include ('controller/frontEnd/FrontEndcontroller.php');
+function adminindex($statut){
+    isadmin();
+    listarticlesbystatut($statut);
+    
+    
+}
+
 function adminarticlesid(){
     $articlesManager= new Leekman\Blog\Model\ArticleManager();
     $adminarticlesid=$articlesManager->admingetarticlesid();
@@ -32,7 +39,7 @@ function admingetarticles(){
             
 }
 
-
+/*
 function listcomments() // get comments
 {
     $commentManager= new Leekman\Blog\Model\CommentManager();
@@ -40,7 +47,18 @@ function listcomments() // get comments
     if ($comments === false){
         throw new Exception ('impossible d\'obtenir les commentaires!');
     }
-    else{
+    else{            adminindex();
+        
         require ('view/FrontEnd/view.php');
     }
+}*/
+function addarticlecontrol (){
+    if(isset($_POST['title']) && isset($_POST['postarticle'])){
+    addarticle($_POST['title'],$_POST['postarticle'],$_POST['statut']);
+    }
+    else {
+        throw new Exception('Veuillez definir un titre et un contenu pour créer un nouvel article');
+    }
 }
+    
+    

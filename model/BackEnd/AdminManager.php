@@ -7,12 +7,25 @@ require_once ('model/Manager.php');
 
 Class AdminManager extends Manager{
     
+    public function makeuser (){
+        $db= $this->dbconnect();
+        $userdb= $db->query('SELECT login,password,logurl, logbutton,isadmin FROM admin where id=2');
+         $user=new Admin($userdb);
+        
+        $_SESSION['logbutton']=$user->logbutton();
+        $_SESSION['logurl']=$user->logurl();
+        $_SESSION['IsAdmin']=$user->isadmin();
+        
+        
+    }
+        
+    
+    
     public function getAdmin()
     {
         $db= $this->dbconnect();
-        $admindb= $db->query('SELECT login, password FROM admin');
-        while ($admininfo= $admindb->fetch()){
-            $adminid= new Admin($admininfo);}    
+        $adminid= $db->query('SELECT login,password FROM admin where id=1');
+          
         return $adminid;
     }
         

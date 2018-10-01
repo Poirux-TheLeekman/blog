@@ -3,13 +3,20 @@ $headaddon= null;
 ?>
 
 <?php  ob_start();?>
-     			    <?= var_dump($GLOBALS)?>
+<?php      			            var_dump($_SESSION['idarticles']);
+var_dump($_SESSION['logurl']);
+var_dump($_SESSION['logbutton']);
+var_dump($_SESSION['IsAdmin']);
+
+
+?>
+
        <h2> Articles :</h2>
        <aside> <a href="index.php?action=new">Ajouter un nouvel article</a></aside>
        <form action="index.php?action=view" method="post">
                    	<h3> voir tous les articles</h3>
        	<label for="statutarticles">statuts </label>
-       		<select>
+       		<select name="statutarticles">
        			<option value="1"> publiés</option> 
        			<option value="0" DEFAULT> non-publiés</option>
        			<option value="2"> tous</option> 
@@ -43,8 +50,8 @@ $headaddon= null;
        <h2> Commentaires :</h2>
        <form action="index.php?action=view" method="post">
               <h3> voir tous les commentaires</h3>
-       	<label for="statutarticles">statuts </label>
-       		<select>
+       	<label for="reportstatuts">statuts </label>
+       		<select name="reportstatuts">
        			<option value="0"> non-signalés</option> 
        			<option value="1" DEFAULT> signalés</option>
        			<option value="3"> tous</option> 

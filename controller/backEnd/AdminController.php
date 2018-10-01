@@ -10,15 +10,18 @@ require_once ('model/FrontEnd/ArticleManager.php');
     function getAdmin($postlogin,$postpassword)
     {
         $admin= new AdminManager();
-        $adminid=$admin->getAdmin();
+        $admindb=$admin->getAdmin();
+     
+        
     
         
         if($postlogin == $adminid->login() && password_verify($postpassword, $adminid->password()) === TRUE)
                 {     
-                    $_SESSION['IsAdmin']=TRUE;
-                    $_SESSION['logbutton']='Déconnexion';
-                    $_SESSION['logurl']='view/BackEnd/logout.php';
-                    
+                    $_SESSION['IsAdmin']=$adminid->isadmin();
+                    $_SESSION['logbutton']=$adminid->logbutton();
+                    $_SESSION['logurl']=$adminid->logurl();
+                    $statut=3;
+                    return $statut;
                 }
                 else 
                 {
@@ -161,7 +164,7 @@ require_once ('model/FrontEnd/ArticleManager.php');
                 foreach ($articles as $article){
                     $idarticles[]=$article->id();
                 }
-                $_SESSION['idarticles']=$idarticles;
+                $_POST['idarticles']=$idarticles;
                 require ('view/BackEnd/AdminView.php');
                 
                 

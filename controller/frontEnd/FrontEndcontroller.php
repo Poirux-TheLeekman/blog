@@ -19,4 +19,8 @@ require_once ('controller/CommentController.php');
                  require ('view/FrontEnd/login.php');
              }   
          }
-
+        
+         function index(){
+             $statut=1;
+             listarticlesbystatut($statut);   
+         }

@@ -7,11 +7,15 @@ $headaddon=null;?>
      			            <h2> Articles :</h2>
      			            <ul>
      			            <?php
-     			            echo 'artlist';
      			            var_dump($_SESSION['idarticles']);
-     			            echo '<h1>filtlist</h1></hr>';
-     			            var_dump($idarticles);
-     			            foreach ($listarticlesbystatut as $article)  { ?>
+     			             var_dump($GLOBALS) ;
+     			             var_dump($_SESSION['logurl']);
+     			             var_dump($_SESSION['logbutton']);
+     			             var_dump($_SESSION['IsAdmin']);
+     			            
+     			            
+     			            
+     			            foreach ($articles as $article)  { ?>
                     <li><p class="pseudo"><strong>                    
                        
                        <?= htmlspecialchars($article->title())?>

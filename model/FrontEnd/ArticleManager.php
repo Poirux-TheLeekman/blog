@@ -71,8 +71,10 @@ Class ArticleManager extends Manager
         // la suppression a fonctionnée
         return ($delete->rowCount())? true: false;
     }
-    public function addarticle()
+    public function addarticle($title,$content,$statut)
     {
-        
+        $db= $this->dbconnect();
+        $addarticle=$db->prepare('INSERT INTO articles(, title, content, pulish, datetime) VALUES (:title,:content, :publish, NOW())');
+        $addarticle->execute(array('title'=> $tille , 'content' => $content, 'publish' => $publish));
     }
 }

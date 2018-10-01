@@ -2,21 +2,59 @@
 session_start();
 
 // articles controllers
-    
+function listid ($statut){
+    $idarticles=[];
+    $idcomments=[];
+    $articlesManager= new Leekman\Blog\Model\ArticleManager();
+    //$commentsManager= new Leekman\Blog\Model\CommentManager();
+    if ($statut===3){
+        $articles=$articlesManager->getarticles();
+        foreach ($articles as $article){
+            $idarticles[]=$article->id();
+        }
+        $_SESSION['idarticles']=$idarticles;
+    }
+    else {
+        $articles=$articlesManager->getarticlesbystatut($statut);
+        foreach ($articles as $article){
+            $idarticles[]=$article->id();
+        }
+        $_SESSION['idarticles']=$idarticles;
+    }
+}
+         
+        
+         
+         
+         
+         
+         
          function  listarticlesbystatut ($statut)
          {
              $idarticles=[];
              $articlesManager= new Leekman\Blog\Model\ArticleManager();
-             $listarticlesbystatut=$articlesManager->getarticlesbystatut($statut);
-             if ($listarticlesbystatut === false){
+             if ($statut===3){
+                 $articles=$articlesManager->getarticles();
+             }
+             else {
+             $articles=$articlesManager->getarticlesbystatut($statut);
+             }
+             if ($articles === false){
                  throw new Exception ('impossible d\'obtenir les derniers articles!');
              }
              else {
                  
-                 foreach ($listarticlesbystatut as $article){
+                 foreach ($articles as $article){
                      $idarticles[]=$article->id();
                  }
                  $_SESSION['idarticles']=$idarticles;
+                 
+                 if ($_SESSION['IsAdmin']===TRUE){
+                     
+                     require ('view/BackEnd/AdminView.php');
+                     
+                 }
+                 else 
                  require ('view/FrontEnd/articlesView.php');
                      
              }
