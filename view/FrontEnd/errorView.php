@@ -4,8 +4,10 @@ session_start();
 
             <?php ob_start(); ?>
         <article>
+  
+       
                <div id="error">
-              <h2> erreur :</h2>
+              <h2> Information :</h2>
               <div id=errorinfo><?=$errorMessage?></div>
               <a class="img" href="index.php"><img src="public/elephpant-error.png" alt="elephpant says : Error" title="Retour à la page d'accueil"/></a>
               </div>

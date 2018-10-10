@@ -11,12 +11,11 @@ Class Admin extends Model {
             $_logurl,
             $_logbutton,
             $_isadmin;
-            
     
     
  // constructeur - reçois un tableau
  
-            public function __construct($data )
+    public function __construct( $data)
     {
         $this->hydrate($data);
         
@@ -24,13 +23,10 @@ Class Admin extends Model {
             
       //getters
         public function login(){return $this ->_login;}
-        public function password(){return $this->_password;}
         public function logurl(){return $this->_logurl;}
+        public function password(){return $this->_password;}
         public function logbutton(){return $this->_logbutton;}
         public function isadmin(){return $this->_isadmin;}
-        
-        
-        
   
             
             
@@ -51,29 +47,27 @@ Class Admin extends Model {
             }
             else 'mot de passe non valide';
         }
-        public function setLogurl($logurl){
-            // On vérifie qu'il s'agit bien d'une chaîne de caractères.
+        public function setLogurl ($logurl){
             if (is_string($logurl))
             {
                 $this->_logurl = $logurl;
             }
-            else 'logurl non valide';
+            else 'mot de passe non valide';
         }
-        public function setLogbutton($logbutton){
-            // On vérifie qu'il s'agit bien d'une chaîne de caractères.
+        public function setLogbutton ($logbutton){
             if (is_string($logbutton))
             {
                 $this->_logbutton = $logbutton;
             }
-            else 'logbutton non valide';
+            else 'mot de passe non valide';
         }
-        public function setIsadmin($isadmin){
-            // On vérifie qu'il s'agit bien d'une chaîne de caractères.
-     
-                $this->_isadmin = $isadmin;
-           
+        public function setIsadmin ($isadmin){
+                
+                $this->_isadmin = (int)$isadmin;
+            
         }
-
-
-
+    
 }
+
+
+

@@ -8,12 +8,24 @@
         <link rel="stylesheet" href="public/style.css" />
         <?= $headaddon ?>
     </head>
+        	          			    <?= 'Isadmin : '?><?=var_dump($_SESSION['IsAdmin'])?>
+        	 						<?= '<hr>idarticles : '?><?=var_dump($_SESSION['idarticles'])?>
+									<?= '<hr>logurl : '?><?=var_dump($_SESSION['logurl'])?>
+									<?= '<hr>idcomments : '?><?=var_dump($_SESSION['idcomments'])?>
+																		<?= '<hr>articletilte : '?><?=var_dump($GLOBALS)?>
+									
+									
+        	          			    
+        	 <div class="button"><a href="<?=$_SESSION['logurl']?>">	<?=$_SESSION['logbutton']?></a><?=$_SESSION['IsAdmin']?></div> 
+    
     <header>
-    	<div class="button"><a href="<?=$_SESSION['logurl']?>">	<?=$_SESSION['logbutton']?></a></div>
+    	   
+    	
 	</header>
 	
 	<body>
             <?= $content ?>
+       
     </body>
     <footer>
         <div id="footercontent">

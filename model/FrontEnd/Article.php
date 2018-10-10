@@ -42,14 +42,11 @@ Class Article extends Model{
         }
         public function setDatetime($datetime)
         {
-            // On vérifie qu'il s'agit bien d'une chaîne de caractères.
-            if (strptime($datetime, "%d/%m/%Y")) 
-            {
-                $this->_datetime = $datetime;
-            }
-            else{
-               throw new \Exception('format de date non valide');
-            }
+            $datetime1=date('d/m/Y à H:m:s',strtotime($datetime));
+            //  if (strptime($datetime1, '%d/%m/%Y %H:%M:%S'))
+            //{
+            $this->_datetime = $datetime1;
+            //}
         }
         public function setTitle($title)
         {

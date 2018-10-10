@@ -10,11 +10,8 @@
      			            <h2> Articles :</h2>
      			          	<form action="index.php?action=edit" method="post">
             <p>
-              <label for="title">Titre</label> : <input type="text" name="title" id="author" value="<?= $_POST['title'] ?>"/><br />
-              <label for="statut">Satut</label> : <input type="checkbox" name="statut" id="statut" value="0" checked/>non publié
-              										<input type="checkbox" name="statut" id="statut" value="1" />publié <br />
-              
-              <label for="postarticle">Article</label> : <textarea  name="postarticle" id="postcomment" rows="8" cols="40"><?= $_POST['postcomment'] ?></textarea><br />
+              <label for="Title">Titre</label> : <input type="text" name="title" id="author" value="<?= $article->title()?>"/><br />
+              <label for="postcomment">Texte</label> : <textarea  name="article" id="postcomment" rows="8" cols="40"><?= $article->content() ?></textarea><br />
 
               <input type="submit" value="Envoyer" />
             </p>

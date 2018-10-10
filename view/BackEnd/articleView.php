@@ -10,7 +10,9 @@ $headaddon=null;?>
                         <?=   $article->content()?>
                     <div class="dh">le
                         <?= $article->datetime() ?>
-                    </div></li>
+                    </div>
+                    <a href="index.php?action=edit&article=<?= $article->id()?>" title="editer l'article <?= $article->title()?> "><div class="dh">Editer l'article</div></a></div>
+                    </li>
                                    </ul>
        				 </article>
        				 <h3>Laisser un Commentaire :</h3>
@@ -36,9 +38,9 @@ $headaddon=null;?>
                         <?=   htmlspecialchars($comment->author()) ?>
                     </strong> a dit <q>
                         <?=  nl2br (htmlspecialchars($comment->postcomment())) ?>
-                    </q><br /></p><a href="index.php?action=report&id=<?=   nl2br ($comment->id()) ?>&R=<?=   nl2br ($comment->report()) ?>" class="button">Signaler</a></div>
-                    <div class="dh">le<?=   nl2br($comment->datetime()) ?>
-                    </div></li>
+                    </q><br /></p></div>
+                    <div class="dh">le<?=   htmlspecialchars($comment->datetime())?>
+                    </div><div class=""><a href="index.php?action=comment&del=<?=htmlspecialchars($comment->id())?>">  Supprimer</a></div></li>
                     <?php
                     }
                     ?>

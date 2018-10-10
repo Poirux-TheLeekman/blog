@@ -12,7 +12,7 @@ Class ArticleManager extends Manager
     {
         $articles=[];
         $db= $this->dbconnect();
-        $articleslist = $db->query('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, publish FROM articles ORDER BY id ASC');
+        $articleslist = $db->query('SELECT id, title, content, datetime, publish FROM articles ORDER BY id ASC');
         // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
        // return $articleslist;
         
@@ -28,7 +28,7 @@ Class ArticleManager extends Manager
     {
         
         $db= $this->dbconnect();
-        $getlastarticle = $db->query('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, publish from articles order by datetime DESC limit 0,1');
+        $getlastarticle = $db->query('SELECT id, title, content, datetime, publish from articles order by datetime DESC limit 1');
         // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
         while ($newarticle=$getlastarticle->fetch(\PDO::FETCH_ASSOC)){
             $lastarticle=new Article($newarticle);
@@ -40,7 +40,7 @@ Class ArticleManager extends Manager
     public function getarticlesbystatut($statut){
         
         $db= $this->dbconnect();
-        $getarticles = $db->prepare('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime FROM articles WHERE publish=?');
+        $getarticles = $db->prepare('SELECT id, title, content, datetime FROM articles WHERE publish=?');
         // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
         
         $getarticles->execute(array ($statut));
@@ -55,7 +55,7 @@ Class ArticleManager extends Manager
     public function getarticlebyid($id){
         
         $db= $this->dbconnect();
-        $getarticle = $db->prepare('SELECT id, title, content, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime FROM articles WHERE id=?');
+        $getarticle = $db->prepare('SELECT id, title, content, datetime,publish FROM articles WHERE id=?');
         // Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
         
         $getarticle->execute(array ($id));
@@ -64,17 +64,24 @@ Class ArticleManager extends Manager
         return $article;
     }
     // methode delete
-    public function deleteArticle(int $id){
-        $delete = $this->connexion->prepare("DELETE FROM article WHERE id=?");
-        $delete->bindValue(1,$id,Manager::PARAM_INT);
-        $delete->execute();
+    public function delete(int $id){
+        $db= $this->dbconnect();
+        $delete = $db->prepare("DELETE FROM articles WHERE id=?");
+        $delete->execute(array($id));
         // la suppression a fonctionnée
         return ($delete->rowCount())? true: false;
     }
-    public function addarticle($title,$content,$statut)
+    public function addarticle($title,$content)
     {
-        $db= $this->dbconnect();
-        $addarticle=$db->prepare('INSERT INTO articles(, title, content, pulish, datetime) VALUES (:title,:content, :publish, NOW())');
-        $addarticle->execute(array('title'=> $tille , 'content' => $content, 'publish' => $publish));
+            $db= $this->dbconnect();
+            $addarticle = $db->prepare('INSERT INTO articles(title, content,datetime) VALUES (:title,:content, NOW())');
+            $addarticle->execute(array('title'=> $title , 'content' => $content));
+            $_SESSION['addarticle']=($addarticle->rowCount())? true: false;
+            return ($addarticle->rowCount())? true: false;
     }
+    public function updatearticle($id,$title,$content,$publish){
+        $db= $this->dbconnect();
+        $updarticle = $db->PREPARE('UPDATE articles SET title=?, content=?, publish=?, datetime=NOW() WHERE id =?');
+        $updarticle->execute(array($title,$content,$publish,$id));
+        return $updarticle->rowcount();    }
 }

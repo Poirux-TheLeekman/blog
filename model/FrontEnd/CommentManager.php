@@ -5,13 +5,28 @@ require_once ('model/Manager.php');
 Class CommentManager extends Manager
 {
   
+    //
+    public function getcomments()
+    {
+        $comments=[];
+        $db= $this->dbconnect();
+        $commentsreq = $db->prepare('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, report,idarticle  FROM comments ORDER BY id ASC');
+        $commentsreq->execute(array($id));
+        while ($commentsdata=$commentsreq->fetch()){
+            $commentdata= new \Comment($commentsdata);
+            $comments[]=$commentdata;
+        }
+        return $comments;
+    }
     
+    //-----------------------------------------------------------
     // add a comment to article identified by id
     public function addcomment ($articleid,$author,$postcomment)
     {
         $db= $this->dbconnect();
-        $addcomment = $db->prepare('INSERT INTO comments(idarticle, author, postcomment, datetime) VALUES (:idarticle,:author, :postcontent, NOW())');
+        $addcomment = $db->prepare('INSERT INTO comments(idarticle, author, postcomment, datetime) VALUES (:idarticle,:author, :postcontent,NOW())');
         $addcomment->execute(array('idarticle'=> $articleid , 'author' => $author, 'postcontent' => $postcomment));
+        
     }
     
     // get the 20 last comment
@@ -19,7 +34,7 @@ Class CommentManager extends Manager
     {
         $lastcomments=[];
         $db= $this->dbconnect();
-        $comments= $db->query('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime,report FROM comments ORDER BY datetime DESC LIMIT 0, 5');
+        $comments= $db->query('SELECT id, author, postcomment, idarticle, datetime,report FROM comments ORDER BY datetime DESC limit 5');
         foreach ($comments as $data){
             $comment=new \Comment($data);
             $lastcomments[]=$comment;
@@ -54,7 +69,7 @@ Class CommentManager extends Manager
     {
         $comments=[];
         $db= $this->dbconnect();
-        $commentsreq = $db->prepare('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, report  FROM comments WHERE idarticle = ?');
+        $commentsreq = $db->prepare('SELECT id, author, postcomment, datetime, report  FROM comments WHERE idarticle = ?');
         $commentsreq->execute(array($id));
         while ($commentsdata=$commentsreq->fetch()){
             $commentdata= new \Comment($commentsdata);
@@ -85,6 +100,17 @@ Class CommentManager extends Manager
         $updatereport->execute(array($report,$id));
         
     }
-    
+    public function getcommentsbyreport($report)
+    {
+        $comments=[];
+        $db= $this->dbconnect();
+        $commentsreq = $db->prepare('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, idarticle  FROM comments where report=?');
+        $commentsreq->execute(array($report));
+        while ($commentsdata=$commentsreq->fetch()){
+            $commentdata= new \Comment($commentsdata);
+            $comments[]=$commentdata;
+        }
+        return $comments;
+    }
     
 }

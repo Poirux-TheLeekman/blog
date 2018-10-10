@@ -6,17 +6,12 @@ $headaddon=null;?>
      			            <article>
      			            <h2> Articles :</h2>
      			            <ul>
+     			            
      			            <?php
-     			            var_dump($_SESSION['idarticles']);
-     			             var_dump($GLOBALS) ;
-     			             var_dump($_SESSION['logurl']);
-     			             var_dump($_SESSION['logbutton']);
-     			             var_dump($_SESSION['IsAdmin']);
-     			            
-     			            
      			            
      			            foreach ($articles as $article)  { ?>
                     <li><p class="pseudo"><strong>                    
+                                      
                        
                        <?= htmlspecialchars($article->title())?>
                     </strong> : <q>

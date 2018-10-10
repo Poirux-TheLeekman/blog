@@ -11,7 +11,8 @@ Class Comment extends Model{
     $_datetime,
     $_author,
     $_postcomment,
-    $_report;
+    $_report,
+    $_articletitle;
     
     // constructeur - reçois un tableau
     public function __construct($data)
@@ -30,6 +31,7 @@ Class Comment extends Model{
         public function author(){return $this ->_author;}
         public function postcomment(){return $this ->_postcomment;}
         public function report(){return $this ->_report;}
+        public function articletitle(){return $this ->_articletitle;}
         
             
             
@@ -48,9 +50,9 @@ Class Comment extends Model{
             
         }
         public function setIdarticle($idarticle)
-        {
-            $articleid=(int)$idarticle;
-            if ($idarticle>O)
+        
+        {   $idarticle=(int)$idarticle;
+            if ($idarticle>0)
             {
                 $this->_idarticle=$idarticle;
             }
@@ -60,15 +62,14 @@ Class Comment extends Model{
             }
             
         }
-        public function setDatetime($datetime)
-        {
-            // On vérifie qu'il s'agit bien d'une chaîne de caractères.
-            if (strptime($datetime, "%d/%m/%Y")) 
-            {
-                $this->_datetime = $datetime;
-            }
-            else
-               throw new \Exception( 'format de date non valide');
+        public function setDatetime($datetime){
+               $datetime1=date('d/m/Y à H:m:s',strtotime($datetime));
+           //  if (strptime($datetime1, '%d/%m/%Y %H:%M:%S')) 
+            //{
+                $this->_datetime = $datetime1;
+            //}
+            //else
+            //   throw new \Exception( 'format de date non valide');
         }
         public function setAuthor($author)
         {
@@ -95,12 +96,22 @@ Class Comment extends Model{
         {
             $report=(int)$report;
             
-            if ($report == 0 ||$report == 1)
-            {
+            //if ($report == 0 ||$report == 1)
+            //{
                 $this->_report = $report;
+           // }
+           // else {
+             //   throw new \Exception('unrecognized report status');
+           // }
+        }
+        public function setArticleTitle ($articletitle)
+        {
+            if (is_string($articletitle))
+            {
+                $this->_articletitle = $articletitle;
             }
-            else {
-                throw new \Exception('unrecognized report status');
+            else{
+                throw new \Exception( 'contenu d\'article non valide');
             }
         }
       

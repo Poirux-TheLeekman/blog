@@ -1,66 +1,94 @@
 <?php 
+use Leekman\Blog\Model\AdminManager;
+use Leekman\Blog\Model\ArticleManager;
+
 session_start();
 
 // articles controllers
-function listid ($statut){
+function listlastarticle (){
+    
+    $articleManager= new Leekman\Blog\Model\ArticleManager();
+    $lastarticle=$articleManager->getlastarticle();
+  
+        return $lastarticle;
+}
+
+
+function  listarticlesbystatut ($statut)
+{
+    require_once ('controller/backEnd/AdminController.php');
+    
     $idarticles=[];
-    $idcomments=[];
     $articlesManager= new Leekman\Blog\Model\ArticleManager();
-    //$commentsManager= new Leekman\Blog\Model\CommentManager();
-    if ($statut===3){
-        $articles=$articlesManager->getarticles();
-        foreach ($articles as $article){
-            $idarticles[]=$article->id();
-        }
-        $_SESSION['idarticles']=$idarticles;
+    $articles=$articlesManager->getarticlesbystatut($statut);
+    if ($articles === false){
+        throw new Exception ('impossible d\'obtenir les derniers articles!');
     }
     else {
-        $articles=$articlesManager->getarticlesbystatut($statut);
+        
         foreach ($articles as $article){
             $idarticles[]=$article->id();
         }
         $_SESSION['idarticles']=$idarticles;
-    }
-}
-         
+        return $articles;
         
-         
-         
-         
-         
-         
-         function  listarticlesbystatut ($statut)
-         {
-             $idarticles=[];
-             $articlesManager= new Leekman\Blog\Model\ArticleManager();
-             if ($statut===3){
-                 $articles=$articlesManager->getarticles();
-             }
-             else {
-             $articles=$articlesManager->getarticlesbystatut($statut);
-             }
-             if ($articles === false){
-                 throw new Exception ('impossible d\'obtenir les derniers articles!');
-             }
-             else {
-                 
-                 foreach ($articles as $article){
-                     $idarticles[]=$article->id();
-                 }
-                 $_SESSION['idarticles']=$idarticles;
-                 
-                 if ($_SESSION['IsAdmin']===TRUE){
-                     
-                     require ('view/BackEnd/AdminView.php');
-                     
-                 }
-                 else 
-                 require ('view/FrontEnd/articlesView.php');
-                     
-             }
-             
-             
-         }
+    }
+    
+    
+}
+function listallarticles(){
+    $articlesManager= new Leekman\Blog\Model\ArticleManager();
+    $articles=$articlesManager->getarticles();
+    if (($articles === false)|| ($lastarticle===false)){
+        throw new Exception ('impossible d\'obtenir les articles!');
+    }
+    else {
+        foreach ($articles as $article){
+            $idarticles[]=$article->id();
+        }
+        $_SESSION['idarticles']=$idarticles;
+        return $articles;
+        
+        
+    }// idcomments();
+    
+}
+
+function postarticle($title,$content){
+    $allarticles=listallarticles();
+    foreach ($allarticles as $article){
+        $titlelist[]=$article->title();
+    }
+        if (in_array($title,$titlelist)){
+            throw new Exception('Erreur : Ce titre existe deja');
+            
+        }
+        else {
+            $articlesManager= new Leekman\Blog\Model\ArticleManager();
+            $new=$articlesManager->addarticle($title,$content);
+            if ($new === true){
+                header('location:index.php');
+            }
+            else
+                throw new Exception('erreur ');
+        } 
+    
+}
+function editarticle($id){
+        $manager=new ArticleManager();
+        $edit=$manager->updatearticle($id,$_POST['title'],$_POST['content'],$_POST['publish']);
+        if ($edit===1){
+            header('location:index.php');
+        }
+        else 
+            throw new Exception('erreur');
+    
+}
+
+
+
+//------------------------------------------------
+      
          
          function  listarticle ($id)
          {
@@ -73,16 +101,21 @@ function listid ($statut){
                  throw new Exception ('impossible d\'obtenir les derniers articles!');
              }
              else{
-                 require ('view/FrontEnd/articleView.php');
+                 return (array($article,$comments));
              }
          }
          
-         function filtered_articles (array $articleslist,$statut){
-             $filtered_articles=[];
-             foreach ($articleslist as $article)  {
-                 if ($article->Publish() === $statut){
-                     $filtered_articles[]=$article;
-                 }}
-                 require ('view/FrontEnd/articlesView.php');
+         function deleteArticle($id){
+             $action=new ArticleManager();
+             $del=$action->delete($id);
+             if ($del===TRUE){
+                 throw new Exception('Article Supprimer' );
+                 
+             }
+             else
+                 throw new Exception('hum hum' );
                  
          }
+         
+         
+         

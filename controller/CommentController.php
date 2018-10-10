@@ -1,6 +1,73 @@
 <?php 
 session_start();
 
+function listlastcomments(){
+    
+    $lastcomments=new Leekman\Blog\Model\CommentManager();
+    $comments=$lastcomments->getlastcomments();
+    // $lastarticle=$articleManager->getlastarticle();
+    if ($comments === false){
+        throw new Exception ('impossible d\'obtenir les commentaires!');
+    }
+    return $comments;
+    
+}
+
+function listallcomments(){
+    $idcomments=[];
+    $commentmanager=new Leekman\Blog\Model\CommentManager();
+    $allcomments=$commentmanager->getcomments();
+  
+    if ($comments === false){
+        throw new Exception ('impossible d\'obtenir les commentaires!');
+    }
+    else {
+        foreach ($allcomments as $comment){
+            $idcomments[]=(int)$comment->id();
+        }
+        $_SESSION['idcomments']=$idcomments;
+        return $allcomments;
+    }
+}
+function listcommentsbyarticles($articles){
+    $comments=[];
+    $allcomments=listallcomments();
+    foreach ($allcomments as $comment){
+        if (in_array($comment->idarticle(),$articles)){
+            $idcomments[]=(int)$comment->id();
+            $comments[]=$comment;
+        }
+        else {
+            throw new Exception('n\'eŝt pas dasn le tablo');
+        }
+    }
+    $_SESSION['idcomments']=$idcomments;
+    return $comments;
+    
+}
+function listcommentsbyarticlesbyreport($articles,$report) // get comments
+{
+    
+    $commentsarticles=listcommentsbyarticles($articles);
+    $comments0=[];
+    $comments1=[];
+    foreach ($commentsarticles as $comment){
+        if (in_array($comment->idarticle(), $articles)){
+           
+                if ((int)$comment->report()===$report){
+                $idcomments[]=(int)$comment->id();
+                $comments[]=$comment;
+                }
+                
+        }
+      
+    }
+    $_SESSION['idcomments']=$idcomments;
+    return $comments;
+}
+
+
+//-------------------------------------------
 // comments controllers
 function listcomment($postId)  //get comment content by id
 {
@@ -14,17 +81,7 @@ function listcomment($postId)  //get comment content by id
     }
 }
 
-function listcomments() // get comments
-{
-    $commentManager= new Leekman\Blog\Model\CommentManager();
-    $comments=$commentManager->getcomments();
-    if ($comments === false){
-        throw new Exception ('impossible d\'obtenir les commentaires!');
-    }
-    else{
-        require ('view/FrontEnd/view.php');
-    }
-}
+
 function editcomment($postId,$author,$postcomment)  // update comment selected by id
 {
     $commentManager= new Leekman\Blog\Model\CommentManager();
@@ -51,17 +108,13 @@ function postcomment($id,$author,$postcomment)   // add comment as new entry
         ;
     }
 }
-function reportcomment($id){
+function reportcomment($id, $report){
     $commentManager= new Leekman\Blog\Model\CommentManager();
-    $currentcomment= $commentManager->getcomment($id);
-    if ($currentcomment->report()===1){
-        throw new Exception ('ce commentaire a déja été signalé, merci !');
-    }
-    else {
-        $update=$commentManager->updatereport($id,1);
+        $report++;   
+        $update=$commentManager->updatereport($id,$report);
         header('Location: index.php');
         
-    }
+    
     if ($update === FALSE){
         throw new Exception ('commentaire inexistant !');
     }

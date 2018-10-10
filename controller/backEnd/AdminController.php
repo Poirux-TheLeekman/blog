@@ -5,24 +5,30 @@ use Leekman\Blog\Model\CommentManager;
 require_once ('model/BackEnd/AdminManager.php');
 require_once ('model/FrontEnd/CommentManager.php');
 require_once ('model/FrontEnd/ArticleManager.php');
+      
+
+
+
+
        
+       
+       
+       //___________________________________
     // admin controller
-    function getAdmin($postlogin,$postpassword)
+    function verifAdmin($postlogin,$postpassword)
     {
         $admin= new AdminManager();
-        $admindb=$admin->getAdmin();
-     
-        
+        $adminid=$admin->getUser(1);
     
         
         if($postlogin == $adminid->login() && password_verify($postpassword, $adminid->password()) === TRUE)
                 {     
-                    $_SESSION['IsAdmin']=$adminid->isadmin();
-                    $_SESSION['logbutton']=$adminid->logbutton();
-                    $_SESSION['logurl']=$adminid->logurl();
-                    $statut=3;
-                    return $statut;
-                }
+                    
+                    makeuser(1);
+                    require_once  ('controller/backEnd/BackEndcontroller.php');
+                    
+                    adminindex();                    
+                }   
                 else 
                 {
                     throw new Exception('identifiant non reconnu');
@@ -30,9 +36,16 @@ require_once ('model/FrontEnd/ArticleManager.php');
                 
         }
         
+        function makeuser($statut){
+            $admin= new AdminManager();
+            $adminid=$admin->getUser($statut);
+            $_SESSION['logurl']=$adminid->logurl();
+            $_SESSION['logbutton']=$adminid->logbutton();
+            $_SESSION['IsAdmin']=$adminid->isadmin();
+            
+        }
         
-        
-        // comments controllers
+ /*       // comments controllers
         function adminlistcomment($postId)  //get comment content by id
         {
             $commentManager = new Leekman\Blog\Model\CommentManager();
@@ -94,7 +107,7 @@ require_once ('model/FrontEnd/ArticleManager.php');
                 throw new Exception ('impossible d\'obtenir les derniers articles!');
             }
             else {
-                require ('view/BEnd/articlesView.php');
+                require ('view/BackEnd/articlesView.php');
             }
         }
         function  adminlistarticle ($id)
@@ -147,7 +160,10 @@ require_once ('model/FrontEnd/ArticleManager.php');
             
         }
         
-        function isadmin(){
+  /*      function adminview(){
+            $lastarticle=listlastarticle();
+            //$listlastcomments=listlastcomments();
+            //$listallarticles=listallarticles();
             $idarticles=[];
             $titlesarticles=[];
             $idcomments=[];
@@ -155,30 +171,22 @@ require_once ('model/FrontEnd/ArticleManager.php');
             $comments=$lastcomments->getlastcomments();
             $articlesManager= new Leekman\Blog\Model\ArticleManager();
             $articles=$articlesManager->getarticles();
-            $articleManager= new Leekman\Blog\Model\ArticleManager();
-            $lastarticle=$articleManager->getlastarticle();
+           // $articleManager= new Leekman\Blog\Model\ArticleManager();
+           // $lastarticle=$articleManager->getlastarticle();
             if (($articles === false)|| ($lastarticle===false)){
-                throw new Exception ('impossible d\'obtenir les articles!');
+              throw new Exception ('impossible d\'obtenir les articles!');
             }
             else {
                 foreach ($articles as $article){
                     $idarticles[]=$article->id();
                 }
-                $_POST['idarticles']=$idarticles;
+                $_SESSION['idarticles']=$idarticles;
                 require ('view/BackEnd/AdminView.php');
                 
                 
             }// idcomments();
             
-        }
+        }*/
         
-        function adminarticlesbystatut($statut)
-        {
-            if ($statut===1 || $statut===0){
-                listarticlesbystatut($statut);
-            }
-            else {
-                adminlistarticles ();
-            }
-        }
+       
         
