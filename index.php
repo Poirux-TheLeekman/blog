@@ -47,7 +47,12 @@ try {
             }
             break;
             case 'comment':{
-                if ($_SESSION['IsAdmin']===1){
+                if (isset($_GET['del']) && ($_SESSION['IsAdmin']===1)){
+                    delcontrol($_GET['del']);
+                    
+                }
+                
+                elseif ($_SESSION['IsAdmin']===1){
                     $_POST['author']='Jean Forteroche';
                     
                     if(($_POST['postcomment'] !="votre message")){
@@ -68,10 +73,11 @@ try {
                 }
                 
             }
-            break;
+           break;
             case 'edit':{
                 if ($_SESSION['IsAdmin']===1){
                     editcontrol();
+                    
                 }
                 else 
                     throw new Exception('action non authorisée');
@@ -91,13 +97,13 @@ try {
                     commentsbyreport($_POST['statutcomments']);
                     
                 }
-                elseif ((isset($_GET['postId']))&&((int) $_GET['postId']>0)){
+                elseif ((isset($_POST['commentsarticle']))&& in_array($_POST['commentsarticle'], $_SESSION['idarticles'])){
                     if ($_SESSION['IsAdmin']===1){
-                        adminlistcomment($_GET['postId']);
+                        commentsbyarticlecontrol($_POST['commentsarticle']);
                     }
-                    else {
-                        listcomment($_GET['postId']);
-                    }
+                 //   elseif (isset($_POST['commentsarticle'])) {
+                   //     listcomment($_GET['postId']);
+                   // }
                 }
                 elseif ((isset($_GET['article']))&& in_array($_GET['article'], $_SESSION['idarticles']))
                 {
@@ -111,14 +117,10 @@ try {
                 
             }
             break;
-            case 'delete':{
-                if ($_SESSION['IsAdmin']===1){
-                    deletecontrol();
-                }
-                else 
-                    throw new Exception('Action non authorisée');
-            }
-            break;
+            case 'delete':
+                deletecontrol();
+            
+          break;
             
         }            
      }

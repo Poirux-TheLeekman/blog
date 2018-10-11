@@ -1,18 +1,28 @@
-<?php $title="commentaires"?>
-            <?php ob_start(); ?>
+<?php ob_start(); ?>
         <article>
-              <h2> message d'origine:</h2>
+              <h2> <?=$title?>:</h2>
              <?php 
-             foreach ($comments as $comment){
+                 foreach ($comments as $comment){
+                     if ($comment->report() ===0){
+                         $class=0;
+                     }
+                     elseif ($comment->report() ===1){
+                         $class=1;
+                     }
+                     else{
+                         $class=2;
+                     }
                         
                         ?>
-                   <li> <div class="postview"><p class="pseudo"><strong>
+                   <li> <div class="comment<?=$class?>"><p class="pseudo"><strong>
                         <?=   htmlspecialchars($comment->author()) ?>
                     </strong> a dit <q>
                         <?=  nl2br (htmlspecialchars($comment->postcomment())) ?>
-                    </q><br /></p><a href="index.php?action=view&postId=<?=   nl2br ($comment->id) ?>" class="button">supprimer</a></div>
-                    <div class="dh">le<?=   nl2br($comment->datetimefr) ?>
-                    </div></li>
+                    </q><br /></p></div>
+                    <div class="dh">le <?=   nl2br($comment->datetime()) ?>
+                    </div>
+                      <div class="">Signalé <?=   $comment->report()?> fois.</div>
+                    <div class=""><a href="index.php?action=comment&del=<?=htmlspecialchars($comment->id())?>">  Supprimer</a></div></li></li>
                     <?php
                         }
 

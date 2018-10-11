@@ -42,17 +42,17 @@ $headaddon= null;
   <h3> voir tous les commentaires</h3>
        	<label for="statutcomments">statuts </label>
        		<select name="statutcomments">
-       			<option value="0"> non-signalés</option> 
-       			<option value="1" DEFAULT> signalés</option>
-       			<option value="2"> tous</option> 
+       			<option value=0> non-signalés</option> 
+       			<option value=1 DEFAULT> signalés</option>
+       			<option value=2> tous</option> 
        		</select>
        	 <input type="submit" value="Envoyer" />
        		
        </form>       
         <form action="index.php?action=view" method="post">
  <h3> voir tous les commentaires</h3>
-       	<label for="statutarticles">de l'article </label>
-       		<select>
+       	<label for="commentsarticle">de l'article </label>
+       		<select name="commentsarticle">
        		<?php 
        		foreach ($allarticles as $article){?>
        			<option value="<?= $article->id() ?>"> <?= $article->title()?></option> <?php }?>

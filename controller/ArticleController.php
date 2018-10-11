@@ -109,7 +109,7 @@ function editarticle($id){
              $action=new ArticleManager();
              $del=$action->delete($id);
              if ($del===TRUE){
-                 throw new Exception('Article Supprimer' );
+                 throw new Exception('Article Supprimé' );
                  
              }
              else

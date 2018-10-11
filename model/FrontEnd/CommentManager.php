@@ -10,11 +10,10 @@ Class CommentManager extends Manager
     {
         $comments=[];
         $db= $this->dbconnect();
-        $commentsreq = $db->prepare('SELECT id, author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime, report,idarticle  FROM comments ORDER BY id ASC');
-        $commentsreq->execute(array($id));
-        while ($commentsdata=$commentsreq->fetch()){
-            $commentdata= new \Comment($commentsdata);
-            $comments[]=$commentdata;
+        $commentsreq = $db->query('SELECT id, author, postcomment, datetime, report,idarticle  FROM comments ORDER BY id ASC');
+        foreach ($commentsreq as $comment){
+            $comment= new \Comment($comment);
+           $comments[]=$comment;
         }
         return $comments;
     }
@@ -71,20 +70,21 @@ Class CommentManager extends Manager
         $db= $this->dbconnect();
         $commentsreq = $db->prepare('SELECT id, author, postcomment, datetime, report  FROM comments WHERE idarticle = ?');
         $commentsreq->execute(array($id));
-        while ($commentsdata=$commentsreq->fetch()){
-            $commentdata= new \Comment($commentsdata);
-            $comments[]=$commentdata;
+        foreach ($commentsreq AS $commentdata){
+            $comment= new \Comment($commentdata);
+            $comments[]=$comment;
         }
         return $comments;
     }
     // methode delete
-    public function deleteComment(int $id){
-        $delete = $this->connexion->prepare("DELETE FROM comments WHERE id=?");
-        $delete->bindValue(1,$id,Manager::PARAM_INT);
-        $delete->execute();
+    public function delete(int $id){
+        $db= $this->dbconnect();
+        $delete = $db->prepare("DELETE FROM comments WHERE id=?");
+        $delete->execute(array($id));
         // la suppression a fonctionnée
         return ($delete->rowCount())? true: false;
     }
+    
     public function allcomments_id (){
         $listid_comments=[];
         $db= $this->dbconnect();

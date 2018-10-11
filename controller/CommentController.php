@@ -1,4 +1,6 @@
 <?php 
+use Leekman\Blog\Model\CommentManager;
+
 session_start();
 
 function listlastcomments(){
@@ -16,17 +18,17 @@ function listlastcomments(){
 function listallcomments(){
     $idcomments=[];
     $commentmanager=new Leekman\Blog\Model\CommentManager();
-    $allcomments=$commentmanager->getcomments();
+    $comments=$commentmanager->getcomments();
   
     if ($comments === false){
         throw new Exception ('impossible d\'obtenir les commentaires!');
     }
     else {
-        foreach ($allcomments as $comment){
+        foreach ($comments as $comment){
             $idcomments[]=(int)$comment->id();
         }
         $_SESSION['idcomments']=$idcomments;
-        return $allcomments;
+        return $comments;
     }
 }
 function listcommentsbyarticles($articles){
@@ -45,25 +47,53 @@ function listcommentsbyarticles($articles){
     return $comments;
     
 }
-function listcommentsbyarticlesbyreport($articles,$report) // get comments
+function listcommentsbyarticle($article) // get comments
 {
-    
-    $commentsarticles=listcommentsbyarticles($articles);
-    $comments0=[];
-    $comments1=[];
-    foreach ($commentsarticles as $comment){
-        if (in_array($comment->idarticle(), $articles)){
-           
-                if ((int)$comment->report()===$report){
-                $idcomments[]=(int)$comment->id();
+    $comments=[];
+    $commentmanager=new CommentManager();
+    $comments=$commentmanager->getarticlecomments($article);
+  /*  $comments=listallcomments();
+    foreach ($allcomments as $comment){
+           ;
+                if ((int)$comment->idarticle()===$article){
                 $comments[]=$comment;
                 }
                 
-        }
+     }*/
       
-    }
-    $_SESSION['idcomments']=$idcomments;
     return $comments;
+}
+function listcommentsbyreport($report) // get comments
+{
+    $comments=[];
+    $allcomments=listallcomments();
+    if ((int)$report===0){
+        foreach ($allcomments as $comment){
+            if ((int)$comment->report()===0){
+                $comments[]=$comment;
+            }
+        }
+    }
+    else {
+        foreach ($allcomments as $comment){
+            if ((int)$comment->report()!==0){
+                $comments[]=$comment;
+            }
+        }
+    }
+    return $comments;
+    
+}
+function deleteComment($id){
+    $action=new CommentManager();
+    $del=$action->delete($id);
+    if ($del===TRUE){
+        throw new Exception('Commentaire Supprimé' );
+        
+    }
+    else
+        throw new Exception('hum hum' );
+        
 }
 
 

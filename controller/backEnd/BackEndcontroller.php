@@ -107,6 +107,14 @@ function deletecontrol(){
     }
     throw new Exception('cet article n\'existe pas' );
 }
+function delcontrol($id){
+    if ( in_array($id, $_SESSION['idcomments'])){
+        deleteComment($id);
+        
+        
+    }
+    throw new Exception('cet article n\'existe pas' );
+}
 
 //-------------------------------------------------------------
 function adminarticlesid(){
@@ -138,13 +146,36 @@ function admingetarticles(){
             
 }
 function commentsbyreport($statutcomments){
-    if ($statutcomments===2){
+    if ((int)$statutcomments===2){
+        $title='Tous les commentaires';
         $comments=listallcomments();
+       
     }
-    else 
-        $comments=listcommentsbyarticlesbyreport($_SESSION['idarticles'], $statutcomments);
+    else {
+        if ((int)$statutcomments===0){
+            $title='Commentaires non signalés';
+        }else {
+            $title='Commentaires  signalés';
+                
+        }
+        $comments=listcommentsbyreport($statutcomments);
+    }
+        
+    
+    require_once ('view/BackEnd/CommentsView.php');
+    
 }
- //require ('view/BackEnd/CommentsView.php');
+
+function  commentsbyarticlecontrol($id){
+    $comments=listcommentsbyarticle($id);
+    $title='Commentaires de l\'article '.$id;
+    
+    require ('view/BackEnd/CommentsView.php');
+    
+    
+}
+
+
 
 
 /*function listcomments() // get comments

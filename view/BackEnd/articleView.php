@@ -39,8 +39,9 @@ $headaddon=null;?>
                     </strong> a dit <q>
                         <?=  nl2br (htmlspecialchars($comment->postcomment())) ?>
                     </q><br /></p></div>
-                    <div class="dh">le<?=   htmlspecialchars($comment->datetime())?>
-                    </div><div class=""><a href="index.php?action=comment&del=<?=htmlspecialchars($comment->id())?>">  Supprimer</a></div></li>
+                    <div class="dh">le<?=   htmlspecialchars($comment->datetime())?></div>
+                    <div class="">Signalé <?=   $comment->report()?> fois.</div>
+                    <div class=""><a href="index.php?action=comment&del=<?=htmlspecialchars($comment->id())?>">  Supprimer</a></div></li>
                     <?php
                     }
                     ?>
