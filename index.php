@@ -52,27 +52,16 @@ try {
                     
                 }
                 
-                elseif ($_SESSION['IsAdmin']===1){
-                    $_POST['author']='Jean Forteroche';
+              
                     
-                    if(($_POST['postcomment'] !="votre message")){
-                        postcomment($_GET['article'],$_POST['author'],$_POST['postcomment']);
-                    }
-                    else {
-                        throw new Exception('veuillez renseigner le  champ commentaire');
-                    }
-                    adminlistcomments();
+            elseif(isset($_GET['article'])){
+                if($_POST['author'] === "votre pseudo"){
+                    throw new Exception('veuillez entrer un pseudo');
+                    
                 }
-                else {
-                    if(($_POST['author'] != "votre pseudo" || $_POST['postcomment'] !="votre message")){
-                        postcomment($_GET['article'],$_POST['author'],$_POST['postcomment']);
-                    }
-                    else {
-                        throw new Exception('veuillez renseigner le formulaire');
-                    }
-                }
-                
-            }
+                    postcomment($_GET['article'],$_POST['author'],$_POST['postcomment']);
+             }
+           }
            break;
             case 'edit':{
                 if ($_SESSION['IsAdmin']===1){

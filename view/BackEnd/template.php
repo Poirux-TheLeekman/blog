@@ -8,10 +8,12 @@
         <link rel="stylesheet" href="public/style.css" />
         <?= $headaddon ?>
     </head>
+        	          			   
+									
         	          			    
-        	 <div class="button"><a href="<?=$_SESSION['logurl']?>">	<?=$_SESSION['logbutton']?></a><?=$_SESSION['IsAdmin']?></div> 
-        	 <div> <h2>Billet simple pour l'Alaska</h2></div>
-    
+        	 <div class="button"><a href="<?=$_SESSION['logurl']?>">	<?=$_SESSION['logbutton']?></a></div> 
+    			        	 <div> <h2>Billet simple pour l'Alaska</h2><h3>Espace Administration</h3></div>
+    			
     <header>
     	   
     	

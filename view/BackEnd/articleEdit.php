@@ -13,7 +13,7 @@
                     <div class="dh">le
                         <?= $article->datetime() ?>
                     </div>
-                    <div class=""><a href="index.php?action=delete&article=<?=htmlspecialchars($article->id())?>">  Supprimer</a></div></li>
+                    <div class=""><a href="index.php?action=delete&article=<?=$article->id()?>">  Supprimer</a></div></li>
                                    </ul>
        				 </article>
        				 <h3>Nouveau contenu  :</h3>
@@ -34,5 +34,5 @@
        				
 		                      
                     <?php $content = ob_get_clean();?>
-                   <?php  require ('view/FrontEnd/template.php') ;
+<?php require ('view/BackEnd/template.php') ;
                     

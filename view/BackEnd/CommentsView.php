@@ -29,5 +29,5 @@
                     ?>
               </ul>
                         <?php $content=ob_get_clean(); ?>
-   <?php require ('view/FrontEnd/template.php') ;
+<?php require ('view/BackEnd/template.php') ;
    

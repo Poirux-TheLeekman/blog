@@ -9,6 +9,8 @@ session_start();
                <div id="error">
               <h2> Information :</h2>
               <div id=errorinfo><?=$errorMessage?></div>
+                     <?php  var_dump($affectedline);?>
+              
               <a class="img" href="index.php"><img src="public/elephpant-error.png" alt="elephpant says : Error" title="Retour à la page d'accueil"/></a>
               </div>
                   

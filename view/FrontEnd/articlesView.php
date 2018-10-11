@@ -13,12 +13,12 @@ $headaddon=null;?>
                     <li><p class="pseudo"><strong>                    
                                       
                        
-                       <?= htmlspecialchars($article->title())?>
+                       <?=$article->title()?>
                     </strong> : <q>
-                                               <?= htmlspecialchars(substr($article->content(),0,300).' ...')?>
+                                               <?= substr($article->content(),0,300).' ...'?>
                         
                     </q><div class="button"> <a href="index.php?action=view&article=<?= $article->id()?>">  voir l'article en entier </a> </div>
-                    <div class="dh">le <?=htmlspecialchars($article->datetime())?>
+                    <div class="dh">le <?=$article->datetime()?>
                     
                     </div></li>
                     

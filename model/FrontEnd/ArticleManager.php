@@ -76,7 +76,6 @@ Class ArticleManager extends Manager
             $db= $this->dbconnect();
             $addarticle = $db->prepare('INSERT INTO articles(title, content,datetime) VALUES (:title,:content, NOW())');
             $addarticle->execute(array('title'=> $title , 'content' => $content));
-            $_SESSION['addarticle']=($addarticle->rowCount())? true: false;
             return ($addarticle->rowCount())? true: false;
     }
     public function updatearticle($id,$title,$content,$publish){

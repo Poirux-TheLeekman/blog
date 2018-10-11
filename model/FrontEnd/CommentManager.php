@@ -22,9 +22,16 @@ Class CommentManager extends Manager
     // add a comment to article identified by id
     public function addcomment ($articleid,$author,$postcomment)
     {
-        $db= $this->dbconnect();
-        $addcomment = $db->prepare('INSERT INTO comments(idarticle, author, postcomment, datetime) VALUES (:idarticle,:author, :postcontent,NOW())');
-        $addcomment->execute(array('idarticle'=> $articleid , 'author' => $author, 'postcontent' => $postcomment));
+       
+      
+            $db= $this->dbconnect();
+            $addcomment = $db->prepare('INSERT INTO comments(idarticle, author, postcomment, datetime) VALUES (:idarticle,:author, :postcomment,NOW())');
+            $addcomment->execute(array('idarticle'=> $articleid , 'author' => $author, 'postcomment' => $postcomment));
+            if ($addcomment->rowCount() >0){
+                return true;
+            }
+            else 
+                return FALSE;
         
     }
     
@@ -43,18 +50,7 @@ Class CommentManager extends Manager
         return $lastcomments;
     }
     
-    // get comment identified by id
-    public function getcomment($id)
-    {
-        $db= $this->dbconnect();
-        $commentbyid = $db->prepare('SELECT id,author, postcomment, DATE_FORMAT(datetime, \'%d/%m/%Y à %Hh%imin%ss\') AS datetime,report  FROM comments WHERE id = ?');
-        $commentbyid->execute(array($id));
-        while ($commentdata=$commentbyid->fetch()){
-            $comment = new \Comment($commentdata);
-        }
-        
-        return $comment;
-    }
+
     //edit comment identified by id
     public function updcomment($postId,$author,$postcomment)
     {

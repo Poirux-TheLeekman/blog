@@ -126,10 +126,17 @@ function editcomment($postId,$author,$postcomment)  // update comment selected b
 }
 
 function postcomment($id,$author,$postcomment)   // add comment as new entry
-{
+{   if($_POST['postcomment'] ==="votre message") {
+    throw new ErrorException('veuillez saisir votre commentaire');
+    }
+    elseif (!in_array($id,$_SESSION['idarticles'])){
+        throw new ErrorException(' ajout de commentaire impossible pour cet article');
+    }
+    else
+        $id=(int)$id;
     $commentManager= new Leekman\Blog\Model\CommentManager();
     $affectedline= $commentManager-> addcomment($id,$author,$postcomment);
-    if ($affectedline === false) {
+    if ($affectedline === FALSE) {
         // Gestion de l'erreur à l'arrache
         throw new Exception ('Impossible d\'ajouter le commentaire !');
     }

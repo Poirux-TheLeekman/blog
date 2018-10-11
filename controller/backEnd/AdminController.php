@@ -42,6 +42,11 @@ require_once ('model/FrontEnd/ArticleManager.php');
             $_SESSION['logurl']=$adminid->logurl();
             $_SESSION['logbutton']=$adminid->logbutton();
             $_SESSION['IsAdmin']=$adminid->isadmin();
+            if ($statut===1){
+                $_POST['author']='Jean Forteroche';
+                
+            }
+           
             
         }
         
