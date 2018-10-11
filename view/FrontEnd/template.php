@@ -9,7 +9,7 @@
         <?= $headaddon ?>
     </head>
         	          			    
-        	 <div class="button"><a href="<?=$_SESSION['logurl']?>">	<?=$_SESSION['logbutton']?></a><?=$_SESSION['IsAdmin']?></div> 
+        	 <div class="button"><a href="<?=$_SESSION['logurl']?>">	<?=$_SESSION['logbutton']?></a></div> 
         	 <div> <h2>Billet simple pour l'Alaska</h2></div>
     
     <header>

@@ -1,4 +1,6 @@
 <?php 
+require_once ('model/FrontEnd/CommentManager.php');
+
 use Leekman\Blog\Model\CommentManager;
 
 session_start();
@@ -47,23 +49,16 @@ function listcommentsbyarticles($articles){
     return $comments;
     
 }
-function listcommentsbyarticle($article) // get comments
+function listcommentsbyarticle($article) // get comments by article
 {
     $comments=[];
     $commentmanager=new CommentManager();
     $comments=$commentmanager->getarticlecomments($article);
-  /*  $comments=listallcomments();
-    foreach ($allcomments as $comment){
-           ;
-                if ((int)$comment->idarticle()===$article){
-                $comments[]=$comment;
-                }
-                
-     }*/
+
       
     return $comments;
 }
-function listcommentsbyreport($report) // get comments
+function listcommentsbyreport($report) // get comments by report 
 {
     $comments=[];
     $allcomments=listallcomments();
@@ -99,31 +94,7 @@ function deleteComment($id){
 
 //-------------------------------------------
 // comments controllers
-function listcomment($postId)  //get comment content by id
-{
-    $commentManager = new Leekman\Blog\Model\CommentManager();
-    $comment= $commentManager -> getcomment($postId);
-    if ($comment === false){
-        throw new Exception ('impossible d\'obtenir le commentaire!');
-    }
-    else{
-        require ('view/FrontEnd/commentview.php');
-    }
-}
 
-
-function editcomment($postId,$author,$postcomment)  // update comment selected by id
-{
-    $commentManager= new Leekman\Blog\Model\CommentManager();
-    $affectedline=$commentManager ->updcomment($postId,$author,$postcomment);
-    if ($affectedline === false) {
-        // Gestion de l'erreur à l'arrache
-        throw new Exception ('Impossible de modifier le commentaire !');
-    }
-    else {
-        header('Location: index.php');
-    }
-}
 
 function postcomment($id,$author,$postcomment)   // add comment as new entry
 {   if($_POST['postcomment'] ==="votre message") {

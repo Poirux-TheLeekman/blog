@@ -1,11 +1,9 @@
 <?php 
 session_start();
-require_once ('model/BackEnd/AdminManager.php');
 
 require_once ('controller/ArticleController.php');
 require_once ('controller/CommentController.php');
-require_once ('controller/backEnd/AdminController.php');
-require_once ('controller/backEnd/BackEndcontroller.php');
+
 
 
 
@@ -15,14 +13,10 @@ function indexcontrol($isadmin){
         adminindex();
     }
     else {
-       // $lastarticle=listlastarticle(); //last art
-       // $comments=listlastcomments();  //last 5 comments
-       // require_once ('controller/backEnd/BackEndcontroller.php');
-        
+     
         $articles=listarticlesbystatut(1);
         listallcomments();     //allcommentfor$_SESSION
         
-        //  require_once ('view/BackEnd/AdminView.php');
         require_once ('view/FrontEnd/articlesView.php');
     } 
   

@@ -5,6 +5,7 @@
     <head>
         <meta charset="utf-8" />
         <title><?= $title ?></title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"> 
         <link rel="stylesheet" href="public/style.css" />
         <?= $headaddon ?>
     </head>
@@ -30,5 +31,6 @@
            <div class="button">  <a href="index.php">retour à l'accueil</a></div>
         </div>   
     </footer>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>     
         

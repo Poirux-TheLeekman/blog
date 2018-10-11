@@ -1,5 +1,6 @@
 <?php 
-use Leekman\Blog\Model\AdminManager;
+require_once ('model/FrontEnd/ArticleManager.php');
+
 use Leekman\Blog\Model\ArticleManager;
 
 session_start();

@@ -1,7 +1,9 @@
 <?php 
 session_start();
-require_once ('model/FrontEnd/CommentManager.php');
-require_once ('model/FrontEnd/ArticleManager.php');
+require_once ('controller/ArticleController.php');
+require_once ('controller/CommentController.php');
+
+
 
 
 
@@ -9,24 +11,11 @@ function adminindex(){
     $lastarticle=listlastarticle(); //last art
     $comments=listlastcomments();  
     listallcomments();//last 5 comments
-    require_once ('controller/backEnd/BackEndcontroller.php');
-    /*if (isset($_POST['statutarticles'])){
-        $articles=listarticlesbystatut($statut);
-        return $articles;
-     //   require ('view/BackEnd/articlesView.php');
-      //  require_once ('view/BackEnd/AdminView.php');
-        
-        
-    }*/
+
     $allarticles=listallarticles();
-  //  $articles=listarticlesbystatut($statut);
-    // last five pulish articles 
+
     require_once ('view/BackEnd/AdminView.php');
-    
-      //  require ('view/BackEnd/AdminView.php');
-        
-        
-    // idcomments();
+
     
 }
 
@@ -35,7 +24,7 @@ function logoutcontrol(){
         throw new Exception('hum,hum vous n\'êtes pas connecté.<br>Que faites vous là ?');
     }
     else {
-        //require ('view/BackEnd/logout.php');
+  
         makeuser(0);
         indexcontrol($_SESSION['IsAdmin']);
         require_once ('view/FrontEnd/articlesView.php');
@@ -175,17 +164,3 @@ function  commentsbyarticlecontrol($id){
     
 }
 
-
-
-
-/*function listcomments() // get comments
-{
-    $commentManager= new Leekman\Blog\Model\CommentManager();
-    $comments=$commentManager->getcomments();
-    if ($comments === false){
-        throw new Exception ('impossible d\'obtenir les commentaires!');
-    }
-    else{
-        require ('view/FrontEnd/view.php');
-    }
-}*/
