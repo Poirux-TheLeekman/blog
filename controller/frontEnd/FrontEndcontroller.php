@@ -8,6 +8,21 @@ require_once ('controller/CommentController.php');
 
 
 //usercontrol
+function articlescontrol(){
+    
+    if ($_SESSION['IsAdmin']===1) {
+        $articles=adminarticlesbystatut(2);
+        listallcomments();
+        require_once ('view/BackEnd/articlesView.php');
+        
+    }
+    else{
+    $articles=listarticlesbystatut(1);
+    listallcomments();     
+    require_once ('view/FrontEnd/articlesView.php');
+    }
+}
+
 function indexcontrol($isadmin){
     if ($isadmin===1){
         adminindex();
@@ -16,8 +31,9 @@ function indexcontrol($isadmin){
      
         $articles=listarticlesbystatut(1);
         listallcomments();     //allcommentfor$_SESSION
+        $lastarticle=listlastarticle(1);
         
-        require_once ('view/FrontEnd/articlesView.php');
+        require_once ('view/FrontEnd/View.php');
     } 
   
   

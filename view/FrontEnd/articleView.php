@@ -2,11 +2,11 @@
 $headaddon=null;?>
 					<?php  ob_start();?>
      			            <article>
-     			            <h2> Article :</h2>
-     			            <ul>
+     			            <h2> Chapitre :</h2>
+     			            <ul class="list-unstyled">
                     <li><p class="pseudo"><strong>
                         <?=   $article->title(); ?>
-                    </strong> : <q>
+                    </strong> :
                         <?=   $article->content()?>
                     <div class="dh">le
                         <?= $article->datetime() ?>
@@ -17,8 +17,7 @@ $headaddon=null;?>
        				 <form action="index.php?action=comment&article=<?=   $article->id(); ?>" method="post">
             <p>
               <label for="author">Pseudo</label> : <input type="text" name="author" id="author" value="<?= $_POST['author'] ?>"/><br />
-              <input type="hidden" name="articletitle" value="<?=$article->title() ?>" DEFAULT></option>  
-              </select>
+              <input type="hidden" name="articletitle" value="<?=$article->title() ?>">
               <label for="postcomment">Message</label> : <textarea  name="postcomment" id="postcomment" rows="8" cols="40"><?= $_POST['postcomment'] ?></textarea><br />
 			
               <input type="submit" value="Envoyer" />
@@ -27,22 +26,23 @@ $headaddon=null;?>
      	</form>
        				 
        				 <aside>
-       				 <ul> <h3>Derniers Commentaires :</h3>
+       				  <h3>Derniers Commentaires :</h3>
                     <?php 
                     foreach ($comments as $comment){ 
                     ?>
-                    
-                   <li> <div class="postview"><p class="pseudo"><strong>
-                        <?=   htmlspecialchars($comment->author()) ?>
-                    </strong> a dit <q>
-                        <?=  nl2br (htmlspecialchars($comment->postcomment())) ?>
-                    </q><br /></p><a href="index.php?action=report&id=<?=   nl2br ($comment->id()) ?>&R=<?=   nl2br ($comment->report()) ?>" class="button">Signaler</a></div>
-                    <div class="dh">le<?=   nl2br($comment->datetime()) ?>
-                    </div></li>
+                    <div class="article">
+                        <div class="row">
+    		     		    <div class="col-sm-10">  Pseudo : <?=htmlspecialchars($comment->author())?> a posté sur <em><?=htmlspecialchars($articletitle)?></em></div> 
+    		       		    <div class="col-sm-2">le <?=htmlspecialchars($comment->datetime())?></div>  
+    		     		</div>
+    		     	    <div class="row"> 
+    		     	    	<div class="col-sm-11"><div class="comment<?=$class?>"><?=htmlspecialchars($comment->postcomment())?></div></div> 
+    		     			<div class="dh col-sm-1"><a href="index.php?action=report&id=<?=   nl2br ($comment->id()) ?>&R=<?=   nl2br ($comment->report()) ?>" class="button">Signaler</a></div>
+    		       		</div>
+                    </div>
                     <?php
                     }
                     ?>
-              </ul>
        				 </aside>
 		                      
                     <?php $content = ob_get_clean();?>

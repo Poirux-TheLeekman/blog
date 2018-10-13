@@ -2,7 +2,7 @@
             <?php ob_start(); ?>
         <article>
               <h2> message d'origine:</h2>
-              <ul>
+              <ul class="list-unstyled">
                     <li><p class="pseudo"><strong>
                         <?=   htmlspecialchars($comment->author()) ?>
                     </strong> a dit <q>

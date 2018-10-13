@@ -20,14 +20,13 @@ function adminindex(){
 }
 
 function logoutcontrol(){
-    if ($_SESSION['IsAdmin']===2){
+    if ($_SESSION['IsAdmin']===0){
         throw new Exception('hum,hum vous n\'êtes pas connecté.<br>Que faites vous là ?');
     }
     else {
   
         makeuser(0);
         indexcontrol($_SESSION['IsAdmin']);
-        require_once ('view/FrontEnd/articlesView.php');
     }
 }
 function adminarticlesbystatut($statut)
@@ -62,9 +61,10 @@ function  adminlistarticle ($id)
     }
 }
 function newarticlecontrol (){
-    if ((isset($_POST['title'])) && (isset($_POST['article']))){
+    if ((isset($_POST['title'])) && (isset($_POST['article']))&&(isset($_POST['publish']))){
         if ($_POST['title'] !== 'Titre'){
-            postarticle($_POST['title'],$_POST['article']);
+            $publish=(int)$_POST['publish'];
+            postarticle($_POST['title'],$_POST['article'],$publish);
         }
         else 
             throw new Exception('veuillez entrer votre texte');

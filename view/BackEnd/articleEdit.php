@@ -4,7 +4,7 @@
 					<?php  ob_start();?>
      			            <article>
      			            <h2> Article :</h2>
-     			            <ul>
+     			            <ul class="list-unstyled">
                     <li><p class="pseudo"><strong>Titre :
                         <?=   $article->title(); ?>
                     </strong>
@@ -24,7 +24,7 @@
               <option value="0" default>non publié</option>
               <option value="1">publié</option>
               </select>
-              <label for="content">article</label> : <textarea  name="content" id="content" rows="40" cols="20"><?=   $article->content(); ?></textarea><br />
+              <label for="content">article</label> : <textarea  name="content" id="content" rows="40" cols="40"><?=   $article->content(); ?></textarea><br />
 			
               <input type="submit" value="Envoyer" />
             </p>

@@ -99,7 +99,7 @@ try {
                 }
               
                 else {
-                    throw new Exception('identifiant non valide');
+                    articlescontrol();
                 }
                 
             }

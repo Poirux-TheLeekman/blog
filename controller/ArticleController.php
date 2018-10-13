@@ -55,18 +55,20 @@ function listallarticles(){
     
 }
 
-function postarticle($title,$content){
-    $allarticles=listallarticles();
-    foreach ($allarticles as $article){
-        $titlelist[]=$article->title();
-    }
+function postarticle($title,$content, $statut){
+    if (($_GET['action']!=='new')){
+        $allarticles=listallarticles();
+        foreach ($allarticles as $article){
+            $titlelist[]=$article->title();
+        }
         if (in_array($title,$titlelist)){
             throw new Exception('Erreur : Ce titre existe deja');
             
         }
+    }
         else {
             $articlesManager= new Leekman\Blog\Model\ArticleManager();
-            $new=$articlesManager->addarticle($title,$content);
+            $new=$articlesManager->addarticle($title,$content,$statut);
             if ($new === true){
                 header('location:index.php');
             }
